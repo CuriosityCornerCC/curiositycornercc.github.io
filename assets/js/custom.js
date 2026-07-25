@@ -77,7 +77,7 @@
     const postsPerPage = 4;
 
     // 1. Fetch JSON file
-    fetch('/articles.json')
+    fetch('articles.json')
         .then(response => {
             if (!response.ok) throw new Error("Could not load articles.json");
             return response.json();
