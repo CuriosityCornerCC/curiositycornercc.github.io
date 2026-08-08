@@ -1,4 +1,5 @@
 ---
+import Header from '../components/Header.astro';
 import Sidebar from '../components/Sidebar.astro';
 import Lightbox from '../components/Lightbox.astro';
 
@@ -17,18 +18,18 @@ const { title, description = "A modern high-performance static website built wit
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <!-- Font Awesome & Main Styles -->
+    <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css" />
     <link rel="stylesheet" href="/assets/css/main.css" />
   </head>
   <body>
     <div id="wrapper">
       <div id="main">
         <div class="inner">
-          <!-- Header -->
-          <header id="header">
-            <a href="/" class="logo"><strong>Curiosity Corner</strong></a>
-          </header>
+          <!-- Top Header with Social Icons -->
+          <Header />
 
-          <!-- Main Slot -->
+          <!-- Main Page Content -->
           <slot />
         </div>
       </div>
@@ -40,7 +41,7 @@ const { title, description = "A modern high-performance static website built wit
     <!-- Lightbox Modal -->
     <Lightbox />
 
-    <!-- Scripts -->
+    <!-- Core Scripts -->
     <script is:inline src="/assets/js/jquery.min.js"></script>
     <script is:inline src="/assets/js/browser.min.js"></script>
     <script is:inline src="/assets/js/breakpoints.min.js"></script>

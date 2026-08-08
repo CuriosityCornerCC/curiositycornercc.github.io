@@ -42,7 +42,7 @@ const { categoryName, posts } = Astro.props;
 <BaseLayout title={`Posts in ${categoryName} | Curiosity Corner`} description={`Browse all articles categorized under ${categoryName}.`}>
   <section>
     <header class="main">
-      <h1>Category: {categoryName}</h1>
+      <h2>{categoryName}</h2>
     </header>
     
     {posts && posts.length > 0 ? (

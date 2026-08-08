@@ -37,10 +37,6 @@ const categories = Array.from(categoryMap.entries()).map(([name, catPosts]) => {
 
 <BaseLayout title="All Categories | Curiosity Corner" description="Browse all article categories on Curiosity Corner.">
   <section>
-    <header class="main">
-      <h1>Categories</h1>
-    </header>
-
     {categories.length > 0 ? (
       <>
         <div class="posts" id="category-grid">

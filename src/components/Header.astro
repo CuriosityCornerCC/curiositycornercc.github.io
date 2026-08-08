@@ -1,13 +1,29 @@
 ---
-const { title = "Curiosity Corner" } = Astro.props;
+// Header component with logo and social media links
 ---
 
 <header id="header">
-  <a href="/" class="logo">{title}</a>
+  <a href="/" class="logo"><strong>Curiosity Corner</strong></a>
   <ul class="icons">
-    <li><a href="https://twitter.com" class="icon brands fa-tiktok" target="_blank" rel="noopener noreferrer"><span class="label">TikTok</span></a></li>
-    <li><a href="https://facebook.com" class="icon brands fa-facebook-f" target="_blank" rel="noopener noreferrer"><span class="label">Facebook</span></a></li>
-    <li><a href="https://instagram.com" class="icon brands fa-instagram" target="_blank" rel="noopener noreferrer"><span class="label">Instagram</span></a></li>
-    <li><a href="https://instagram.com" class="icon brands fa-youtube" target="_blank" rel="noopener noreferrer"><span class="label">YouTube</span></a></li>
+    <li>
+      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-twitter">
+        <span class="label">Twitter</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-facebook-f">
+        <span class="label">Facebook</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-instagram">
+        <span class="label">Instagram</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/curiositycornercc" target="_blank" rel="noopener noreferrer" class="icon brands fa-github">
+        <span class="label">GitHub</span>
+      </a>
+    </li>
   </ul>
 </header>
