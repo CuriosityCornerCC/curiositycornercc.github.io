@@ -2,6 +2,8 @@
 
 ```sh
 npm create astro@latest -- --template basics
+npx astro add react markdoc -- add required astro integration
+npm install @keystatic/core @keystatic/astr
 ```
 
 > 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!

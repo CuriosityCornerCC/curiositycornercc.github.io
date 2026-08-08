@@ -1,0 +1,26 @@
+---
+const {
+  title = "Hi, I'm Editorial",
+  subtitle = "by HTML5 UP",
+  description = "A free and fully responsive site template designed by HTML5 UP.",
+  buttonText = "Learn More",
+  buttonLink = "/generic",
+  imageSrc = "/images/pic10.jpg"
+} = Astro.props;
+---
+
+<section id="banner">
+  <div class="content">
+    <header>
+      <h1>{title}<br />{subtitle}</h1>
+      <p>A free and fully responsive site template</p>
+    </header>
+    <p>{description}</p>
+    <ul class="actions">
+      <li><a href={buttonLink} class="button big">{buttonText}</a></li>
+    </ul>
+  </div>
+  <span class="image object">
+    <img src={imageSrc} alt="" />
+  </span>
+</section>

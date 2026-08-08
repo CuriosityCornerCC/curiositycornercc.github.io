@@ -1,0 +1,11 @@
+---
+const { iconClass = "fa-gem", title = "", description = "" } = Astro.props;
+---
+
+<article>
+  <span class={`icon solid ${iconClass}`}></span>
+  <div class="content">
+    <h3>{title}</h3>
+    <p>{description}</p>
+  </div>
+</article>

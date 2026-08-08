@@ -1,11 +1,55 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Banner from '../components/Banner.astro';
+import FeatureCard from '../components/FeatureCard.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+let sortedPosts = [];
+try {
+  const posts = await getCollection('blog');
+  if (posts) {
+    sortedPosts = posts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+  }
+} catch (e) {
+  console.error("Content collection error:", e);
+  sortedPosts = [];
+}
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Curiosity Corner | Homepage" description="A modern high-performance static website built with Astro and Sveltia CMS.">
+  <Banner
+    title="Welcome to Curiosity Corner"
+    subtitle="A place to explore the wonders of Windhoek"
+    description="A fast, flat-file Jamstack website designed for zero-cost hosting and top-tier performance."
+    buttonText="Explore Features"
+    buttonLink="#features"
+    imageSrc="/images/pic10.jpg"
+  />
+
+  <section>
+    <header class="major">
+      <h2>Latest Articles</h2>
+    </header>
+    <div class="posts">
+      {sortedPosts.length > 0 ? (
+        sortedPosts.map((post) => (
+          <article>
+            <a href={`/blog/${post.slug || post.id}`} class="image">
+              <img src={post.data.image || "/images/pic01.jpg"} alt={post.data.title} />
+            </a>
+            {post.data.category && (
+               <p style="margin-bottom: 0.5em;"><a href={`/category/${post.data.category.toLowerCase()}`} class="button small" style="box-shadow: none; padding: 0;"><strong>{post.data.category}</strong></a></p>
+            )}
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+            <ul class="actions">
+              <li><a href={`/blog/${post.slug || post.id}`} class="button">Read more</a></li>
+            </ul>
+          </article>
+        ))
+      ) : (
+        <p>No blog posts found. Add your first Markdown post in <code>src/content/blog/</code>.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>

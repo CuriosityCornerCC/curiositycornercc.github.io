@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: curiositycornercc/curiositycornercc.github.io
   branch: main
 
 media_folder: "public/images"
@@ -13,7 +14,9 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Description", name: "description", widget: "string" }
-      - { label: "Hero Image", name: "heroImage", widget: "image", required: false }
+      - { label: "Category", name: "category", widget: "select", options: ["Tech", "Tutorials", "General", "News"], default: "General" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Description", name: "description", widget: "string", required: false }
+      - { label: "Cover Image", name: "image", widget: "image", required: false, default: "/images/pic01.jpg" }
+      - { label: "Featured Post", name: "featured", widget: "boolean", default: false, required: false }
       - { label: "Body", name: "body", widget: "markdown" }

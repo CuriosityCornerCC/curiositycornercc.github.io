@@ -1,0 +1,50 @@
+---
+import Sidebar from '../components/Sidebar.astro';
+import Lightbox from '../components/Lightbox.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "A modern high-performance static website built with Astro and Sveltia CMS." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+  </head>
+  <body class="is-preload">
+    <div id="wrapper">
+      <div id="main">
+        <div class="inner">
+          <!-- Header -->
+          <header id="header">
+            <a href="/" class="logo"><strong>Curiosity Corner</strong></a>
+          </header>
+
+          <!-- Main Slot -->
+          <slot />
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <Sidebar />
+    </div>
+
+    <!-- Lightbox Modal -->
+    <Lightbox />
+
+    <!-- Scripts -->
+    <script is:inline src="/assets/js/jquery.min.js"></script>
+    <script is:inline src="/assets/js/browser.min.js"></script>
+    <script is:inline src="/assets/js/breakpoints.min.js"></script>
+    <script is:inline src="/assets/js/util.js"></script>
+    <script is:inline src="/assets/js/main.js"></script>
+  </body>
+</html>

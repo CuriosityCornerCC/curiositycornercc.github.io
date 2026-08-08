@@ -1,0 +1,47 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug || post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+let Content;
+if (typeof render === 'function') {
+  const rendered = await render(post);
+  Content = rendered.Content;
+} else if (typeof post.render === 'function') {
+  const rendered = await post.render();
+  Content = rendered.Content;
+}
+---
+
+<BaseLayout title={`${post.data.title} | Curiosity Corner`} description={post.data.description}>
+  <article class="post">
+    <header class="main">
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        Published on {new Date(post.data.pubDate).toLocaleDateString()}
+        {post.data.category && (
+          <span> | Category: <a href={`/category/${post.data.category.toLowerCase()}`}><strong>{post.data.category}</strong></a></span>
+        )}
+      </p>
+    </header>
+
+    {post.data.image && (
+      <span class="image main">
+        <img src={post.data.image} alt={post.data.title} />
+      </span>
+    )}
+
+    <div class="content">
+      {Content ? <Content /> : <p>No content available.</p>}
+    </div>
+  </article>
+</BaseLayout>

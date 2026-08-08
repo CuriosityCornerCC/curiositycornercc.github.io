@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  let posts = [];
+  try {
+    posts = await getCollection('blog');
+  } catch (e) {
+    posts = [];
+  }
+
+  const categories = new Set<string>();
+  posts.forEach((post) => {
+    if (post.data && post.data.category) {
+      categories.add(post.data.category);
+    }
+  });
+
+  if (categories.size === 0) {
+    categories.add('General');
+  }
+
+  return Array.from(categories).map((catName) => {
+    const filteredPosts = posts.filter(
+      (post) => post.data && post.data.category && post.data.category.toLowerCase() === catName.toLowerCase()
+    );
+
+    return {
+      params: { category: catName.toLowerCase() },
+      props: { 
+        categoryName: catName, 
+        posts: filteredPosts 
+      },
+    };
+  });
+}
+
+const { categoryName, posts } = Astro.props;
+---
+
+<BaseLayout title={`Posts in ${categoryName} | Curiosity Corner`} description={`Browse all articles categorized under ${categoryName}.`}>
+  <section>
+    <header class="main">
+      <h1>Category: {categoryName}</h1>
+    </header>
+    
+    {posts && posts.length > 0 ? (
+      <>
+        <div class="posts" id="post-grid">
+          {posts.map((post, index) => (
+            <article class={`post-item ${index >= 6 ? 'is-hidden' : ''}`}>
+              <a href={`/blog/${post.slug || post.id}`} class="image">
+                <img src={post.data.image || "/images/pic01.jpg"} alt={post.data.title} />
+              </a>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+              <ul class="actions">
+                <li><a href={`/blog/${post.slug || post.id}`} class="button">Read More</a></li>
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div id="scroll-sentinel" class="sentinel">
+          <p class="loading-text">Loading more articles...</p>
+        </div>
+      </>
+    ) : (
+      <p>No articles found under <strong>{categoryName}</strong>.</p>
+    )}
+  </section>
+
+  <style>
+    .is-hidden {
+      display: none !important;
+    }
+    .sentinel {
+      text-align: center;
+      padding: 2em 0;
+      clear: both;
+    }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = Array.from(document.querySelectorAll('.post-item'));
+      const sentinel = document.getElementById('scroll-sentinel');
+      if (!sentinel || items.length === 0) return;
+
+      const batchSize = 6;
+
+      const checkRemaining = () => {
+        const hidden = items.filter(item => item.classList.contains('is-hidden'));
+        if (hidden.length === 0) {
+          sentinel.style.display = 'none';
+          if (observer) observer.disconnect();
+        }
+      };
+
+      const loadMore = () => {
+        const hiddenItems = items.filter(item => item.classList.contains('is-hidden'));
+        const nextBatch = hiddenItems.slice(0, batchSize);
+        nextBatch.forEach(item => item.classList.remove('is-hidden'));
+        checkRemaining();
+      };
+
+      checkRemaining();
+
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore();
+        }
+      }, { rootMargin: '200px' });
+
+      observer.observe(sentinel);
+    });
+  </script>
+</BaseLayout>

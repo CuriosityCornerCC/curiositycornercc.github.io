@@ -1,0 +1,115 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+let posts = [];
+try {
+  posts = await getCollection('blog');
+} catch (e) {
+  posts = [];
+}
+
+// Group posts by category
+const categoryMap = new Map();
+posts.forEach((post) => {
+  const cat = post.data?.category || 'General';
+  if (!categoryMap.has(cat)) {
+    categoryMap.set(cat, []);
+  }
+  categoryMap.get(cat).push(post);
+});
+
+// Build category array with a random image from its associated articles
+const categories = Array.from(categoryMap.entries()).map(([name, catPosts]) => {
+  const images = catPosts.map((p) => p.data.image).filter(Boolean);
+  const randomImage = images.length > 0 
+    ? images[Math.floor(Math.random() * images.length)]
+    : '/images/pic01.jpg';
+
+  return {
+    name,
+    slug: name.toLowerCase(),
+    count: catPosts.length,
+    image: randomImage,
+  };
+});
+---
+
+<BaseLayout title="All Categories | Curiosity Corner" description="Browse all article categories on Curiosity Corner.">
+  <section>
+    <header class="main">
+      <h1>Categories</h1>
+    </header>
+
+    {categories.length > 0 ? (
+      <>
+        <div class="posts" id="category-grid">
+          {categories.map((cat, index) => (
+            <article class={`category-item ${index >= 6 ? 'is-hidden' : ''}`}>
+              <a href={`/category/${cat.slug}`} class="image">
+                <img src={cat.image} alt={cat.name} />
+              </a>
+              <h3>{cat.name}</h3>
+              <p>{cat.count} {cat.count === 1 ? 'Article' : 'Articles'}</p>
+              <ul class="actions">
+                <li><a href={`/category/${cat.slug}`} class="button">View Category</a></li>
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div id="scroll-sentinel" class="sentinel">
+          <p class="loading-text">Loading more categories...</p>
+        </div>
+      </>
+    ) : (
+      <p>No categories found.</p>
+    )}
+  </section>
+
+  <style>
+    .is-hidden {
+      display: none !important;
+    }
+    .sentinel {
+      text-align: center;
+      padding: 2em 0;
+      clear: both;
+    }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = Array.from(document.querySelectorAll('.category-item'));
+      const sentinel = document.getElementById('scroll-sentinel');
+      if (!sentinel || items.length === 0) return;
+
+      const batchSize = 6;
+
+      const checkRemaining = () => {
+        const hidden = items.filter(item => item.classList.contains('is-hidden'));
+        if (hidden.length === 0) {
+          sentinel.style.display = 'none';
+          if (observer) observer.disconnect();
+        }
+      };
+
+      const loadMore = () => {
+        const hiddenItems = items.filter(item => item.classList.contains('is-hidden'));
+        const nextBatch = hiddenItems.slice(0, batchSize);
+        nextBatch.forEach(item => item.classList.remove('is-hidden'));
+        checkRemaining();
+      };
+
+      checkRemaining();
+
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore();
+        }
+      }, { rootMargin: '200px' });
+
+      observer.observe(sentinel);
+    });
+  </script>
+</BaseLayout>
