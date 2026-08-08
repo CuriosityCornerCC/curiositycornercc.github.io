@@ -10,4 +10,5 @@ export default defineConfig({
       'process.env': {},
     },
   },
+  site: 'https://curiositycornercc.github.io'
 });
