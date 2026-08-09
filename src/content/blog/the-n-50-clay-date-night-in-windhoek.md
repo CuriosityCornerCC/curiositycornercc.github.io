@@ -13,8 +13,8 @@ The concept is simple. Pick up a cheap pack of kids modeling clay from PNA or Wa
 
 We ventured over to Ireland for our drinks, and spiked our coffees with Monkey Shoulder Whiskey - which, to be fair, was my husband’s bright idea. Did the alcohol help with the creativity, I doubt it - but it surely did make the process a lot funnier. 
 
-<div class="video-container"><iframe src="https://www.youtube.com/embed/3U24b9T5MF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-
 We created our interpretation of a Minion and Teletubby, and while we had a couple of hours of belly laughs - the clay figures looked like something from the latest SAW movie. 
 
 If you’re looking for a unique, budget-friendly date night idea, skip the expensive Windhoek restaurants, buy some clay, and see what horrifying things your hands construct.
+
+<div class="video-container"><iframe src="https://www.youtube.com/embed/3U24b9T5MF0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
