@@ -1,14 +1,12 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import markdoc from '@astrojs/markdoc';
-import keystatic from '@keystatic/astro';
+// import keystatic from '@keystatic/astro'; // <-- Comment out or remove
 
 export default defineConfig({
-  integrations: [react(), markdoc(), keystatic()],
-  vite: {
-    define: {
-      'process.env': {},
-    },
-  },
-  site: 'https://curiositycornercc.github.io'
+  site: 'https://curiositycornercc.github.io',
+  output: 'static', // Explicitly enforce static output
+  integrations: [
+    react(),
+    // keystatic(), // <-- Comment out or remove
+  ],
 });
