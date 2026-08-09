@@ -20,35 +20,66 @@ if (typeof render === 'function') {
   const rendered = await post.render();
   Content = rendered.Content;
 }
+
+const coverImage = post.data.image || '/images/pic01.jpg';
 ---
 
 <BaseLayout
   title={`${post.data.title} | Curiosity Corner`}
   description={post.data.description}
-  image={post.data.image}
+  image={coverImage}
   articleDate={new Date(post.data.pubDate)}
   updatedDate={post.data.updatedDate ? new Date(post.data.updatedDate) : undefined}
   author={post.data.author}
   type="article"
+  hideDefaultHeader={true}
 >
-  <article class="post">
-    <header class="main">
+  <!-- Blog Cover Hero Banner (35vh height with 30% Black Overlay) -->
+  <div class="blog-hero" style={`background-image: url('${coverImage}');`}>
+    <div class="blog-hero-overlay"></div>
+
+    <!-- Top Row: Page Header & Social Media Follow Options -->
+    <div class="blog-hero-top">
+      <a href="/" class="logo"><strong>Curiosity Corner</strong></a>
+      <ul class="icons">
+        <li>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-twitter">
+            <span class="label">Twitter</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-facebook-f">
+            <span class="label">Facebook</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-instagram">
+            <span class="label">Instagram</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/curiositycornercc" target="_blank" rel="noopener noreferrer" class="icon brands fa-github">
+            <span class="label">GitHub</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Bottom Row: Blog Header & Media Data -->
+    <div class="blog-hero-bottom">
       <h1>{post.data.title}</h1>
       <p class="meta">
         Published on {new Date(post.data.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         {post.data.author && <span> by <strong>{post.data.author}</strong></span>}
         {post.data.category && (
-          <span> | Category: <a href={`/category/${post.data.category.toLowerCase()}`}><strong>{post.data.category}</strong></a></span>
+          <span> | Category: <a href={`/category/${post.data.category.toLowerCase()}`}>{post.data.category}</a></span>
         )}
       </p>
-    </header>
+    </div>
+  </div>
 
-    {post.data.image && (
-      <span class="image main">
-        <img src={post.data.image} alt={post.data.title} />
-      </span>
-    )}
-
+  <!-- Post Body Content -->
+  <article class="post">
     <div class="content">
       {Content ? <Content /> : <p>No content available.</p>}
     </div>

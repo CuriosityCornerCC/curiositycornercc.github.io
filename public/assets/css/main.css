@@ -736,10 +736,10 @@ table.alt tfoot { border-top: 0; }
 /* Media & Embeds */
 .video-container {
   position: relative;
-  width: 100%;
+  width: 70%;
   padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
   height: 0;
-  margin-bottom: 1.5em;
+  margin: 0 auto 1.5em auto;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -921,8 +921,20 @@ header.main p, header.main p.meta, header.major p {
   width: calc(100% + 6em);
 }
 .posts article > :last-child { margin-bottom: 0; }
-.posts article .image { display: block; margin: 0 0 2em 0; }
-.posts article .image img { display: block; width: 100%; }
+.posts article .image {
+  display: block;
+  margin: 0 0 1.5em 0;
+  overflow: hidden;
+  border-radius: 0.375em;
+}
+
+.posts article .image img {
+  display: block;
+  width: 100%;
+  height: 200px;        /* Adjust this height (e.g., 160px, 180px, 200px) as preferred */
+  object-fit: cover;   /* Prevents distortion by scaling and cropping cleanly */
+  object-position: center;
+}
 
 @media screen and (min-width: 1681px) {
   .posts article:nth-child(3n + 1):before { display: none; }
@@ -1463,4 +1475,124 @@ header.main p, header.main p.meta, header.major p {
   .row > .col-10-xsmall { width: 83.33333%; }
   .row > .col-11-xsmall { width: 91.66667%; }
   .row > .col-12-xsmall { width: 100%; }
+}
+
+/* ==========================================================================
+   8. Blog Post Hero Cover Banner (~35vh Height with 30% Dark Overlay)
+   ========================================================================== */
+.blog-hero {
+  position: relative;
+  width: 100%;
+  height: 45vh;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2em;
+  margin-top: 1em;
+  margin-bottom: 2.5em;
+  border-radius: 0.5em;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 30% Opacity Black Overlay */
+.blog-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.blog-hero-top,
+.blog-hero-bottom {
+  position: relative;
+  z-index: 2;
+}
+
+/* Top Row: Page Header & Social Icons Over Cover Image */
+.blog-hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding-bottom: 0.75em;
+}
+
+.blog-hero-top .logo {
+  color: #ffffff !important;
+  font-family: var(--font-serif);
+  font-size: 1.25em;
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+.blog-hero-top .icons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.blog-hero-top .icons li {
+  display: inline-block;
+  padding: 0 0.5em 0 0;
+  
+}
+
+.blog-hero-top .icons li a, .blog-hero-top .logo a {
+  color: #ffffff !important;
+  border-bottom: 0;
+  font-size: 1.1em;
+}
+
+.blog-hero-top .icons li a:hover {
+  color: var(--color-primary) !important;
+}
+
+/* Bottom Row: Blog Header & Media Data Over Cover Image */
+.blog-hero-bottom h1 {
+  color: #ffffff !important;
+  margin: 0 0 0.25em 0 !important;
+  font-size: 2.25em;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  line-height: 1.25;
+}
+
+.blog-hero-bottom .meta {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.95em;
+  margin-bottom: 0 !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.blog-hero-bottom .meta a,
+.blog-hero-bottom .meta strong {
+  color: #ffffff !important;
+}
+
+/* Mobile Responsiveness for Hero Banner */
+@media screen and (max-width: 736px) {
+  .blog-hero {
+    height: auto;
+    min-height: 40vh;
+    padding: 1.25em;
+  }
+
+  .blog-hero-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5em;
+  }
+
+  .blog-hero-bottom h1 {
+    font-size: 1.6em;
+  }
 }
