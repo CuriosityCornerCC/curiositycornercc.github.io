@@ -3,8 +3,8 @@ title: The N$50 Clay Date Night in Windhoek
 category: Date Night
 pubDate: 2026-08-09
 description: After 18 years together date nights get rather tricky, and it has nothing to do with love. It simply happens because you’ve officially run out of interesting things to talk about. So you become desperate - until you realise you can have a fun date night for under N$ 50.
-image: /images/Photoroom-20260803_200246.jpg
-featured: false
+image: /images/Date_Night_Take_1.jpg
+featured: true
 ---
 
 After 18 years together date nights get rather tricky, and it has nothing to do with love. It simply happens because you’ve officially run out of interesting things to talk about. So you become desperate - until you realise you can have a fun date night for under N$ 50. 
