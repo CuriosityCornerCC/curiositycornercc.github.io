@@ -28,12 +28,12 @@ const categories = Array.from(categoriesMap.entries()).map(([slug, name]) => ({
 <div id="sidebar">
   <div class="inner">
     <!-- Logo -->
-    <section id="logo" class="alt" style="text-align: center; padding: 0.5em 0;">
+    <section id="logo" class="alt" style="text-align: center; padding: 0;">
       <a href="/" class="logo-link" style="display: block; text-align: center;">
         <img 
           src="/Curiosity_Corner_Logo_2.svg" 
           alt="Curiosity Corner Logo" 
-          style="max-width: 75%; height: auto; display: block; margin: 0 auto;" 
+          style="max-width: 95%; height: auto; display: block; margin: 0 auto;" 
         />
       </a>
     </section>
@@ -42,7 +42,6 @@ const categories = Array.from(categoriesMap.entries()).map(([slug, name]) => ({
     <nav id="menu">
       <ul>
         <li><a href="/">Homepage</a></li>
-        <li><a href="/behind_the_corner">Behind the Corner</a></li>
 
         <!-- Dropdown Menu for Categories -->
         <li>
@@ -68,9 +67,7 @@ const categories = Array.from(categoriesMap.entries()).map(([slug, name]) => ({
 
     <!-- Footer -->
     <footer id="footer">
-      <p class="copyright">
-        &copy; {new Date().getFullYear()} Curiosity Corner. All rights reserved.
-      </p>
+      <p class="copyright">&copy; {new Date().getFullYear()} Curiosity Corner. All rights reserved.</p>
     </footer>
   </div>
 </div>

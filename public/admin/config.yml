@@ -14,7 +14,7 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["Tech", "Tutorials", "General", "News"], default: "General" }
+      - { label: "Category", name: "category", widget: "select", options: ["Crochet", "Grooming", "Date Night", "Tech", "Things to Do", "Local Flavor"], default: "General" }
       - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
       - { label: "Description", name: "description", widget: "string", required: false }
       - { label: "Cover Image", name: "image", widget: "image", required: false, default: "/images/pic01.jpg" }

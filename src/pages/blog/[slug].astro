@@ -22,12 +22,21 @@ if (typeof render === 'function') {
 }
 ---
 
-<BaseLayout title={`${post.data.title} | Curiosity Corner`} description={post.data.description}>
+<BaseLayout
+  title={`${post.data.title} | Curiosity Corner`}
+  description={post.data.description}
+  image={post.data.image}
+  articleDate={new Date(post.data.pubDate)}
+  updatedDate={post.data.updatedDate ? new Date(post.data.updatedDate) : undefined}
+  author={post.data.author}
+  type="article"
+>
   <article class="post">
     <header class="main">
       <h1>{post.data.title}</h1>
       <p class="meta">
-        Published on {new Date(post.data.pubDate).toLocaleDateString()}
+        Published on {new Date(post.data.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        {post.data.author && <span> by <strong>{post.data.author}</strong></span>}
         {post.data.category && (
           <span> | Category: <a href={`/category/${post.data.category.toLowerCase()}`}><strong>{post.data.category}</strong></a></span>
         )}
