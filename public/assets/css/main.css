@@ -1493,7 +1493,7 @@ header.main p, header.main p.meta, header.major p {
   margin-bottom: 2.5em;
   border-radius: 0.5em;
   background-size: cover;
-  background-position: center;
+  background-position: bottom center;
   background-repeat: no-repeat;
   overflow: hidden;
   color: #ffffff;
