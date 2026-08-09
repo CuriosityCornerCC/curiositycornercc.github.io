@@ -1,7 +1,30 @@
 ---
-// No dynamic data needed in sidebar
+import { getCollection } from 'astro:content';
+
+// 1. Fetch all blog posts
+const allPosts = await getCollection('blog');
+
+// 2. Extract unique categories dynamically
+const categoriesMap = new Map<string, string>();
+
+allPosts.forEach((post) => {
+  if (post.data.category) {
+    const slug = post.data.category.toLowerCase().trim();
+    // Capitalize the first letter for display
+    const formattedName =
+      post.data.category.charAt(0).toUpperCase() + post.data.category.slice(1);
+    
+    categoriesMap.set(slug, formattedName);
+  }
+});
+
+const categories = Array.from(categoriesMap.entries()).map(([slug, name]) => ({
+  slug,
+  name,
+}));
 ---
 
+<!-- Sidebar -->
 <div id="sidebar">
   <div class="inner">
     <!-- Logo -->
@@ -15,18 +38,39 @@
       </a>
     </section>
 
-    <!-- Navigation Menu -->
+    <!-- Menu -->
     <nav id="menu">
       <ul>
         <li><a href="/">Homepage</a></li>
-        <li><a href="/categories">Curiosity Corner</a></li>
         <li><a href="/behind_the_corner">Behind the Corner</a></li>
+
+        <!-- Dropdown Menu for Categories -->
+        <li>
+          <span class="opener">Curiosity Corner</span>
+          <ul>
+            {
+              categories.length > 0 ? (
+                categories.map((cat) => (
+                  <li>
+                    <a href={`/category/${cat.slug}`}>{cat.name}</a>
+                  </li>
+                ))
+              ) : (
+                <li><span>No categories yet</span></li>
+              )
+            }
+          </ul>
+        </li>
+
+        <li><a href="/categories">All Categories</a></li>
       </ul>
     </nav>
 
     <!-- Footer -->
     <footer id="footer">
-      <p class="copyright">&copy; Curiosity Corner. All rights reserved.</p>
+      <p class="copyright">
+        &copy; {new Date().getFullYear()} Curiosity Corner. All rights reserved.
+      </p>
     </footer>
   </div>
 </div>

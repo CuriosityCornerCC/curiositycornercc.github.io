@@ -1,12 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Manager | Curiosity Corner</title>
+    <title>Content Manager</title>
   </head>
   <body>
-    <!-- Sveltia CMS CDN Script -->
-    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+    <!-- Sveltia CMS App -->
+    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+
+    <!-- YouTube Custom Editor Block -->
+    <script>
+      CMS.registerEditorComponent({
+        id: "youtube",
+        label: "YouTube Video",
+        fields: [
+          {
+            name: "id",
+            label: "YouTube Video ID or Full Link",
+            widget: "string",
+            hint: "Example: dQw4w9WgXcQ or https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        ],
+        pattern: /^<div class="video-container"><iframe src="https:\/\/www\.youtube\.com\/embed\/([^"]+)"[\s\S]*?><\/iframe><\/div>$/,
+        fromBlock: function(match) {
+          return { id: match[1] };
+        },
+        toBlock: function(obj) {
+          var videoId = obj.id || '';
+          // Extract Video ID if user pastes full URL
+          if (videoId.includes('v=')) {
+            videoId = videoId.split('v=')[1].split('&')[0];
+          } else if (videoId.includes('youtu.be/')) {
+            videoId = videoId.split('youtu.be/')[1].split('?')[0];
+          }
+          return `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        },
+        toPreview: function(obj) {
+          var videoId = obj.id || '';
+          if (videoId.includes('v=')) videoId = videoId.split('v=')[1].split('&')[0];
+          else if (videoId.includes('youtu.be/')) videoId = videoId.split('youtu.be/')[1].split('?')[0];
+          return `<div style="background:#000;padding:20px;text-align:center;color:#fff;">▶ YouTube Embed: ${videoId}</div>`;
+        }
+      });
+    </script>
   </body>
 </html>
