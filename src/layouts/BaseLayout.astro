@@ -10,53 +10,97 @@ interface Props {
   articleDate?: Date;
   updatedDate?: Date;
   author?: string;
-  type?: 'website' | 'article';
+  type?: 'article' | 'recipe' | 'website';
   hideDefaultHeader?: boolean;
+  // Recipe SEO props
+  servings?: number | string;
+  totalCalories?: number | string;
+  prepTime?: string;
+  cookTime?: string;
+  ingredients?: string[];
+  instructions?: string[];
 }
 
 const {
   title,
-  description = "A modern high-performance static website built with Astro and Sveltia CMS.",
+  description = "A modern high-performance blog.",
   image = "/images/pic01.jpg",
   articleDate,
   updatedDate,
   author = "Curiosity Corner",
   type = "website",
   hideDefaultHeader = false,
+  servings,
+  totalCalories,
+  prepTime,
+  cookTime,
+  ingredients = [],
+  instructions = []
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://curiositycornercc.github.io");
 const socialImageURL = new URL(image, Astro.site || "https://curiositycornercc.github.io");
 
-const jsonLdSchema = type === "article" ? {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": title,
-  "description": description,
-  "image": socialImageURL.href,
-  "datePublished": articleDate ? articleDate.toISOString() : undefined,
-  "dateModified": updatedDate ? updatedDate.toISOString() : (articleDate ? articleDate.toISOString() : undefined),
-  "author": {
-    "@type": "Person",
-    "name": author
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Curiosity Corner",
-    "logo": {
-      "@type": "ImageObject",
-      "url": new URL("/Curiosity_Corner_Logo_2.svg", Astro.site || "https://curiositycornercc.github.io").href
+// Dynamic Schema.org JSON-LD generation
+let jsonLdSchema: Record<string, any> | null = null;
+
+if (type === "article") {
+  jsonLdSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "image": [socialImageURL.href],
+    "datePublished": articleDate ? articleDate.toISOString() : undefined,
+    "dateModified": updatedDate ? updatedDate.toISOString() : (articleDate ? articleDate.toISOString() : undefined),
+    "author": {
+      "@type": "Person",
+      "name": author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Curiosity Corner",
+      "logo": {
+        "@type": "ImageObject",
+        "url": new URL("/Curiosity_Corner_Logo_2.svg", Astro.site || "https://curiositycornercc.github.io").href
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalURL.href
     }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": canonicalURL.href
-  }
-} : null;
+  };
+} else if (type === "recipe") {
+  jsonLdSchema = {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    "name": title,
+    "description": description,
+    "image": [socialImageURL.href],
+    "author": {
+      "@type": "Person",
+      "name": author
+    },
+    "datePublished": articleDate ? articleDate.toISOString() : undefined,
+    "dateModified": updatedDate ? updatedDate.toISOString() : (articleDate ? articleDate.toISOString() : undefined),
+    "recipeYield": servings ? `${servings} servings` : undefined,
+    "prepTime": prepTime,
+    "cookTime": cookTime,
+    "nutrition": totalCalories ? {
+      "@type": "NutritionInformation",
+      "calories": `${totalCalories} calories`
+    } : undefined,
+    "recipeIngredient": ingredients,
+    "recipeInstructions": instructions.map((step) => ({
+      "@type": "HowToStep",
+      "text": step
+    }))
+  };
+}
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style="scroll-behavior: smooth;">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -65,8 +109,8 @@ const jsonLdSchema = type === "article" ? {
     <meta name="author" content={author} />
     <link rel="canonical" href={canonicalURL.href} />
 
-    <!-- Open Graph & Twitter Tags -->
-    <meta property="og:type" content={type} />
+    <!-- Open Graph / Social Tags -->
+    <meta property="og:type" content={type === 'recipe' ? 'article' : type} />
     <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -88,6 +132,9 @@ const jsonLdSchema = type === "article" ? {
     <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css" />
     <link rel="stylesheet" href="/assets/css/main.css" />
 
+    <!-- Brand Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/curiosity-corner-theme.css" />
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-61XSPRKWJP"></script>
     <script>

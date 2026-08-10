@@ -1,0 +1,260 @@
+/**
+ * Curiosity Corner - Custom Brand Theme & Recipe Design System
+ * Brand Palette:
+ *   --color-beige:          #E2E8CE (Warm neutral tint)[cite: 2]
+ *   --color-cinnamon:       #A9714C (Secondary accent)[cite: 2]
+ *   --color-lavender-grey:  #8797B2 (Muted borders & tags)[cite: 2]
+ *   --color-iron-grey:      #474747 (High-contrast typography)[cite: 2]
+ *   --color-fern:           #4D7B3D (Primary brand CTA / action)[cite: 2]
+ */
+
+:root {
+  --color-beige: #E2E8CE;
+  --color-beige-light: #f7f9f2;
+  --color-cinnamon: #A9714C;
+  --color-cinnamon-hover: #8f5c3a;
+  --color-lavender-grey: #8797B2;
+  --color-lavender-light: #eef2f6;
+  --color-iron-grey: #474747;
+  --color-iron-grey-dark: #2c2c2c;
+  --color-fern: #4D7B3D;
+  --color-fern-hover: #3b602e;
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-subtle: 0 4px 14px rgba(71, 71, 71, 0.08);
+  --shadow-elevated: 0 8px 24px rgba(71, 71, 71, 0.12);
+  --transition-fast: all 0.2s ease-in-out;
+}
+
+/* ==========================================================================
+   Global Base Typography & Palette Application
+   ========================================================================== */
+body {
+  color: var(--color-iron-grey);
+  background-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-iron-grey-dark);
+  font-weight: 700;
+}
+
+a {
+  color: var(--color-cinnamon);
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-cinnamon-hover);
+}
+
+/* ==========================================================================
+   Jump to Recipe Component & Buttons
+   ========================================================================== */
+.jump-recipe-container {
+  margin: 1.5rem 0 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.jump-recipe-btn {
+  background-color: var(--color-fern) !important;
+  color: #ffffff !important;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(77, 123, 61, 0.25);
+  transition: var(--transition-fast);
+  border: none;
+  cursor: pointer;
+}
+
+.jump-recipe-btn:hover {
+  background-color: var(--color-fern-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(77, 123, 61, 0.35);
+}
+
+/* ==========================================================================
+   Recipe Card Container
+   ========================================================================== */
+.recipe-card-box {
+  background: var(--color-beige-light);
+  border: 2px solid var(--color-beige);
+  border-left: 6px solid var(--color-fern);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  margin: 3rem 0;
+  box-shadow: var(--shadow-subtle);
+  scroll-margin-top: 2rem;
+}
+
+.recipe-card-header h2 {
+  margin-bottom: 1rem;
+  color: var(--color-iron-grey-dark);
+  border-bottom: 2px solid var(--color-lavender-grey);
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.recipe-card-header h2 i {
+  color: var(--color-fern);
+}
+
+/* Recipe Metadata Bar */
+.recipe-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  background: #ffffff;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-lavender-grey);
+  margin-bottom: 2rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--color-iron-grey);
+}
+
+.meta-item i {
+  color: var(--color-cinnamon);
+}
+
+/* Recipe Grid Layout */
+.recipe-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .recipe-card-grid {
+    grid-template-columns: 1fr 1.4fr;
+  }
+}
+
+.recipe-ingredients h3,
+.recipe-instructions h3 {
+  margin-bottom: 1rem;
+  color: var(--color-iron-grey-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.recipe-ingredients h3 i,
+.recipe-instructions h3 i {
+  color: var(--color-cinnamon);
+}
+
+/* Ingredients Checklist Styling */
+.ingredients-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.ingredients-list li {
+  margin-bottom: 0.65rem;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.98rem;
+  color: var(--color-iron-grey);
+  user-select: none;
+}
+
+.ingredient-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.15em;
+  height: 1.15em;
+  border: 2px solid var(--color-lavender-grey);
+  border-radius: 4px;
+  margin-top: 0.2em;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.ingredient-item input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #ffffff;
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.ingredient-item input[type="checkbox"]:checked {
+  background-color: var(--color-fern);
+  border-color: var(--color-fern);
+}
+
+.ingredient-item input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+.ingredient-item input[type="checkbox"]:checked + span {
+  text-decoration: line-through;
+  color: var(--color-lavender-grey);
+}
+
+/* Instructions Step List */
+.instructions-list {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.instructions-list li {
+  margin-bottom: 1.1rem;
+  line-height: 1.6;
+  color: var(--color-iron-grey);
+}
+
+.instructions-list li::marker {
+  color: var(--color-cinnamon);
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Dexter's Approval Badge (Brand Accent)
+   ========================================================================== */
+.dexter-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-beige);
+  border: 1px solid var(--color-cinnamon);
+  color: var(--color-iron-grey-dark);
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.dexter-seal i {
+  color: var(--color-cinnamon);
+}

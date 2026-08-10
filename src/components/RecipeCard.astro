@@ -1,0 +1,82 @@
+---
+interface Props {
+  title: string;
+  servings?: number | string;
+  totalCalories?: number | string;
+  prepTime?: string;
+  cookTime?: string;
+  ingredients?: string[];
+  instructions?: string[];
+}
+
+const {
+  title,
+  servings,
+  totalCalories,
+  prepTime,
+  cookTime,
+  ingredients = [],
+  instructions = []
+} = Astro.props;
+---
+
+<section id="recipe-card" class="recipe-card-box">
+  <div class="recipe-card-header">
+    <h2><i class="fas fa-utensils"></i> {title}</h2>
+    <div class="recipe-meta-bar">
+      {servings && (
+        <div class="meta-item">
+          <i class="fas fa-user-friends"></i>
+          <span><strong>Servings:</strong> {servings}</span>
+        </div>
+      )}
+      {totalCalories && (
+        <div class="meta-item">
+          <i class="fas fa-fire"></i>
+          <span><strong>Calories:</strong> {totalCalories} kcal</span>
+        </div>
+      )}
+      {prepTime && (
+        <div class="meta-item">
+          <i class="fas fa-clock"></i>
+          <span><strong>Prep:</strong> {prepTime}</span>
+        </div>
+      )}
+      {cookTime && (
+        <div class="meta-item">
+          <i class="fas fa-stopwatch"></i>
+          <span><strong>Cook:</strong> {cookTime}</span>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <div class="recipe-card-grid">
+    {ingredients.length > 0 && (
+      <div class="recipe-ingredients">
+        <h3><i class="fas fa-shopping-basket"></i> Ingredients</h3>
+        <ul class="ingredients-list">
+          {ingredients.map((item) => (
+            <li>
+              <label class="ingredient-item">
+                <input type="checkbox" />
+                <span>{item}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {instructions.length > 0 && (
+      <div class="recipe-instructions">
+        <h3><i class="fas fa-list-ol"></i> Instructions</h3>
+        <ol class="instructions-list">
+          {instructions.map((step) => (
+            <li>{step}</li>
+          ))}
+        </ol>
+      </div>
+    )}
+  </div>
+</section>

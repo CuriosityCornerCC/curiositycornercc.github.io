@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import RecipeCard from '../../components/RecipeCard.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -22,6 +23,7 @@ if (typeof render === 'function') {
 }
 
 const coverImage = post.data.image || '/images/pic01.jpg';
+const isRecipe = post.data.type === 'recipe';
 ---
 
 <BaseLayout
@@ -31,41 +33,29 @@ const coverImage = post.data.image || '/images/pic01.jpg';
   articleDate={new Date(post.data.pubDate)}
   updatedDate={post.data.updatedDate ? new Date(post.data.updatedDate) : undefined}
   author={post.data.author}
-  type="article"
+  type={isRecipe ? 'recipe' : 'article'}
+  servings={post.data.servings}
+  totalCalories={post.data.totalCalories}
+  prepTime={post.data.prepTime}
+  cookTime={post.data.cookTime}
+  ingredients={post.data.ingredients}
+  instructions={post.data.instructions}
   hideDefaultHeader={true}
 >
-  <!-- Blog Cover Hero Banner (35vh height with 30% Black Overlay) -->
+  <!-- Blog Cover Hero Banner -->
   <div class="blog-hero" style={`background-image: url('${coverImage}');`}>
     <div class="blog-hero-overlay"></div>
 
-    <!-- Top Row: Page Header & Social Media Follow Options -->
     <div class="blog-hero-top">
       <a href="/" class="logo"><strong>Curiosity Corner</strong></a>
       <ul class="icons">
-        <li>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-twitter">
-            <span class="label">Twitter</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-facebook-f">
-            <span class="label">Facebook</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-instagram">
-            <span class="label">Instagram</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/curiositycornercc" target="_blank" rel="noopener noreferrer" class="icon brands fa-github">
-            <span class="label">GitHub</span>
-          </a>
-        </li>
+        <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+        <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+        <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+        <li><a href="https://github.com/curiositycornercc" target="_blank" rel="noopener noreferrer" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
       </ul>
     </div>
 
-    <!-- Bottom Row: Blog Header & Media Data -->
     <div class="blog-hero-bottom">
       <h1>{post.data.title}</h1>
       <p class="meta">
@@ -78,10 +68,32 @@ const coverImage = post.data.image || '/images/pic01.jpg';
     </div>
   </div>
 
-  <!-- Post Body Content -->
+  <!-- Main Article Body -->
   <article class="post">
+    <!-- "Jump to Recipe" Button for Recipe posts -->
+    {isRecipe && (
+      <div class="jump-recipe-container">
+        <a href="#recipe-card" class="button primary icon solid fa-utensils jump-recipe-btn">
+          Jump to Recipe
+        </a>
+      </div>
+    )}
+
     <div class="content">
       {Content ? <Content /> : <p>No content available.</p>}
     </div>
+
+    <!-- Render Recipe Card if template is Recipe -->
+    {isRecipe && (
+      <RecipeCard
+        title={post.data.title}
+        servings={post.data.servings}
+        totalCalories={post.data.totalCalories}
+        prepTime={post.data.prepTime}
+        cookTime={post.data.cookTime}
+        ingredients={post.data.ingredients}
+        instructions={post.data.instructions}
+      />
+    )}
   </article>
 </BaseLayout>

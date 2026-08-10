@@ -1596,3 +1596,107 @@ header.main p, header.main p.meta, header.major p {
     font-size: 1.6em;
   }
 }
+
+/* ==========================================================================
+   9. Recipe Card Styles
+   ========================================================================== */
+.recipe-card-box {
+    background: #fdfbf7;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 3rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    scroll-margin-top: 2rem;
+  }
+
+  .recipe-card-header h2 {
+    margin-bottom: 1rem;
+    color: #2d3748;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+  }
+
+  .recipe-meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background: #ffffff;
+    padding: 0.85rem 1.25rem;
+    border-radius: 6px;
+    border: 1px solid #edf2f7;
+    margin-bottom: 2rem;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: #4a5568;
+  }
+
+  .meta-item i {
+    color: #f56565;
+  }
+
+  .recipe-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .recipe-card-grid {
+      grid-template-columns: 1fr 1.5fr;
+    }
+  }
+
+  .recipe-ingredients h3,
+  .recipe-instructions h3 {
+    margin-bottom: 1rem;
+    color: #2d3748;
+  }
+
+  .ingredients-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .ingredient-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+  }
+
+  .ingredient-item input[type="checkbox"] {
+    margin-top: 0.25rem;
+    accent-color: #f56565;
+  }
+
+  .instructions-list {
+    padding-left: 1.25rem;
+  }
+
+  .instructions-list li {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .jump-recipe-container {
+    margin: 1.5rem 0 2rem 0;
+  }
+  .jump-recipe-btn {
+    background-color: #f56565 !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    border-radius: 6px;
+    padding: 0.6rem 1.25rem;
+    font-weight: 600;
+  }
+  .jump-recipe-btn:hover {
+    background-color: #e53e3e !important;
+  }
