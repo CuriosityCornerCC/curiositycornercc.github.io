@@ -38,8 +38,8 @@ const {
   instructions = []
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://curiositycornercc.github.io");
-const socialImageURL = new URL(image, Astro.site || "https://curiositycornercc.github.io");
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://curiositycorner.cc");
+const socialImageURL = new URL(image, Astro.site || "https://curiositycorner.cc");
 
 // Dynamic Schema.org JSON-LD generation
 let jsonLdSchema: Record<string, any> | null = null;
@@ -62,7 +62,7 @@ if (type === "article") {
       "name": "Curiosity Corner",
       "logo": {
         "@type": "ImageObject",
-        "url": new URL("/Curiosity_Corner_Logo_2.svg", Astro.site || "https://curiositycornercc.github.io").href
+        "url": new URL("/Curiosity_Corner_Logo_2.svg", Astro.site || "https://curiositycorner.cc").href
       }
     },
     "mainEntityOfPage": {
