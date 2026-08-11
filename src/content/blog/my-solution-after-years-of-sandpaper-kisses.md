@@ -3,7 +3,7 @@ type: article
 title: My solution after years of sandpaper kisses
 category: Grooming
 pubDate: 2026-08-11
-description: ''
+description: 'The strategy was simple: sniff everything, blend by gut instinct, and hope my husband doesn’t break out in hives.'
 image: /images/Dexter_overseeing_beard_oil_testing_process.png
 featured: true
 servings: null
