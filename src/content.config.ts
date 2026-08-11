@@ -5,10 +5,9 @@ const blog = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: z.object({
     type: z.enum(['article', 'recipe']).default('article'),
-    title: z.string().max(70, "Keep titles under 70 characters for best SEO display"),
+    title: z.string(),
     description: z
       .string()
-      .max(160, "Keep descriptions under 160 characters for search results")
       .optional()
       .nullable()
       .transform((val) => val ?? ''),
