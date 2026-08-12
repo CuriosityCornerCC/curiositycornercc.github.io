@@ -13,19 +13,41 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Page Type", name: "type", widget: "select", options: ["article", "recipe"], default: "article" }
+      - { label: "Type", name: "type", widget: "select", options: ["article", "recipe"], default: "article" }
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["Crochet", "Grooming", "Date Night", "Tech", "Things to Do", "Local Flavor", "Recipes"], default: "General" }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Description", name: "description", widget: "string", required: false }
-      - { label: "Cover Image", name: "image", widget: "image", required: false, default: "/images/pic01.jpg" }
-      - { label: "Featured Post", name: "featured", widget: "boolean", default: false, required: false }
-      
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "Cover Image", name: "image", widget: "image", default: "/images/pic01.jpg" }
+      - { label: "Author", name: "author", widget: "string", default: "Curiosity Corner" }
+      - { label: "Category", name: "category", widget: "string", default: "General" }
+      - { label: "Featured Post", name: "featured", widget: "boolean", required: false, default: false }
+
+      # Google Business Location Fields
+      - label: "Google Business / Location Info"
+        name: "location"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Business Name", name: "name", widget: "string" }
+          - { label: "Category (e.g. Restaurant, Pottery Studio)", name: "category", widget: "string", required: false }
+          - { label: "Rating (e.g. 4.2)", name: "rating", widget: "number", value_type: "float", required: false }
+          - { label: "Reviews Count (e.g. 142)", name: "reviewsCount", widget: "number", value_type: "int", required: false }
+          - { label: "Address", name: "address", widget: "string", required: false }
+          - { label: "Located In (e.g. Action Arena)", name: "locatedIn", widget: "string", required: false }
+          - { label: "Phone", name: "phone", widget: "string", required: false }
+          - { label: "Website URL", name: "website", widget: "string", required: false }
+          - { label: "Menu URL/Domain", name: "menu", widget: "string", required: false }
+          - { label: "Hours (e.g. Open · Closes 9 PM)", name: "hours", widget: "string", required: false }
+          - { label: "Service Options", name: "serviceOptions", widget: "list", required: false }
+          - { label: "Google Maps Directions Link", name: "googleMapsUrl", widget: "string", required: false }
+          - { label: "Google Maps Embed URL", name: "mapEmbedUrl", widget: "string", required: false }
+
       # Recipe Fields
-      - { label: "Servings", name: "servings", widget: "number", value_type: "int", required: false }
-      - { label: "Total Calories", name: "totalCalories", widget: "number", value_type: "int", required: false }
-      - { label: "Prep Time", name: "prepTime", widget: "string", required: false, hint: "e.g. 15 mins" }
-      - { label: "Cook Time", name: "cookTime", widget: "string", required: false, hint: "e.g. 45 mins" }
+      - { label: "Servings", name: "servings", widget: "string", required: false }
+      - { label: "Total Calories", name: "totalCalories", widget: "string", required: false }
+      - { label: "Prep Time", name: "prepTime", widget: "string", required: false }
+      - { label: "Cook Time", name: "cookTime", widget: "string", required: false }
       - { label: "Ingredients", name: "ingredients", widget: "list", required: false }
       - { label: "Instructions", name: "instructions", widget: "list", required: false }
 
