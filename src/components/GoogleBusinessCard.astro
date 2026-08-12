@@ -2,52 +2,58 @@
 // src/components/GoogleBusinessCard.astro
 interface Props {
   name: string;
-  category?: string;
-  rating?: number;
-  reviewsCount?: number;
-  address?: string;
-  locatedIn?: string;
-  phone?: string;
-  website?: string;
-  menu?: string;
-  hours?: string;
-  serviceOptions?: string[];
-  googleMapsUrl?: string;
-  mapEmbedUrl?: string;
+  category?: string | null;
+  rating?: number | null;
+  reviewsCount?: number | null;
+  address?: string | null;
+  locatedIn?: string | null;
+  phone?: string | null;
+  website?: string | null;
+  menu?: string | null;
+  hours?: string | null;
+  serviceOptions?: string[] | null;
+  googleMapsUrl?: string | null;
+  mapEmbedUrl?: string | null;
 }
 
 const {
   name,
-  category = "Restaurant",
-  rating = 4.2,
-  reviewsCount = 142,
+  category,
+  rating,
+  reviewsCount,
   address,
   locatedIn,
   phone,
   website,
   menu,
-  hours = "Open · Closes 9 PM",
-  serviceOptions = [],
+  hours,
+  serviceOptions,
   googleMapsUrl,
   mapEmbedUrl,
 } = Astro.props;
 
-const fullStars = Math.floor(rating);
-const hasHalfStar = rating % 1 >= 0.3 && rating % 1 <= 0.8;
-const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+// Safely normalize numeric inputs that might be passed as null or invalid numbers
+const safeRating = (rating !== null && rating !== undefined && !isNaN(Number(rating))) ? Number(rating) : undefined;
+const safeReviewsCount = (reviewsCount !== null && reviewsCount !== undefined && !isNaN(Number(reviewsCount))) ? Number(reviewsCount) : undefined;
+
+// Calculate star counts safely
+const fullStars = safeRating !== undefined ? Math.floor(safeRating) : 0;
+const hasHalfStar = safeRating !== undefined ? (safeRating % 1 >= 0.3 && safeRating % 1 <= 0.8) : false;
+const emptyStars = safeRating !== undefined ? 5 - fullStars - (hasHalfStar ? 1 : 0) : 5;
 ---
 
 <div class="google-business-card">
+  <!-- Title & Rating Header -->
   <div class="gbc-header">
     <div class="gbc-title-group">
       <h3 class="gbc-name">{name}</h3>
       {category && <span class="gbc-category">{category}</span>}
     </div>
 
-    {rating !== undefined && (
+    {safeRating !== undefined && (
       <div class="gbc-rating-row">
-        <span class="gbc-score">{rating.toFixed(1)}</span>
-        <div class="gbc-stars" aria-label={`Rating: ${rating} out of 5 stars`}>
+        <span class="gbc-score">{safeRating.toFixed(1)}</span>
+        <div class="gbc-stars" aria-label={`Rating: ${safeRating} out of 5 stars`}>
           {Array.from({ length: fullStars }).map(() => (
             <span class="star full">★</span>
           ))}
@@ -56,13 +62,14 @@ const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
             <span class="star empty">★</span>
           ))}
         </div>
-        {reviewsCount !== undefined && (
-          <span class="gbc-reviews">({reviewsCount.toLocaleString()} reviews)</span>
+        {safeReviewsCount !== undefined && (
+          <span class="gbc-reviews">({safeReviewsCount.toLocaleString()} reviews)</span>
         )}
       </div>
     )}
   </div>
 
+  <!-- Action Buttons -->
   <div class="gbc-actions">
     {website && (
       <a href={website} target="_blank" rel="noopener noreferrer" class="gbc-btn">
@@ -76,6 +83,7 @@ const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
     )}
   </div>
 
+  <!-- Details List -->
   <div class="gbc-details">
     {serviceOptions && serviceOptions.length > 0 && (
       <div class="gbc-detail-item">
@@ -121,6 +129,7 @@ const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
     )}
   </div>
 
+  <!-- Embedded Map Preview -->
   {mapEmbedUrl && (
     <div class="gbc-map">
       <iframe
