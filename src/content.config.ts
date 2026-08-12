@@ -5,50 +5,39 @@ const blog = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: z.object({
     type: z.enum(['article', 'recipe']).default('article'),
-    title: z.string(),
-    description: z
-      .string()
-      .optional()
-      .nullable()
-      .transform((val) => val ?? ''),
-    pubDate: z.string().or(z.date()).or(z.coerce.date()),
-    updatedDate: z.string().or(z.date()).or(z.coerce.date()).optional().nullable(),
-
-    // Robust Image Handler: Accepts string, null, or undefined, and falls back to default if empty
-    image: z
-      .string()
-      .optional()
-      .nullable()
-      .transform((val) => (val && val.trim() !== '' ? val : '/images/pic01.jpg')),
-
+    title: z.string().max(70, "Keep titles under 70 characters for best SEO display"),
+    description: z.string().max(160, "Keep descriptions under 160 characters for search results").optional(),
+    pubDate: z.string().or(z.date()),
+    updatedDate: z.string().or(z.date()).optional(),
+    image: z.string().default('/images/pic01.jpg'),
     author: z.string().default('Curiosity Corner'),
     category: z.string().default('General'),
-    featured: z.boolean().optional().nullable().default(false),
+    featured: z.boolean().optional(),
 
-    // Recipe-specific fields (tolerates numbers, strings, nulls, or empty CMS objects)
-    servings: z.union([z.number(), z.string(), z.record(z.unknown())]).optional().nullable(),
-    totalCalories: z.union([z.number(), z.string(), z.record(z.unknown())]).optional().nullable(),
-    prepTime: z.string().optional().nullable().default(''),
-    cookTime: z.string().optional().nullable().default(''),
-    ingredients: z.array(z.string()).optional().nullable().default([]),
-    instructions: z.array(z.string()).optional().nullable().default([]),
-
-    // Google Location Card
+    // Google Business Card Schema
     location: z.object({
       name: z.string(),
+      category: z.string().optional(),
       rating: z.number().optional(),
       reviewsCount: z.number().optional(),
-      category: z.string().optional(),
       address: z.string().optional(),
       locatedIn: z.string().optional(),
       phone: z.string().optional(),
-      website: z.string().url().optional(),
+      website: z.string().optional(),
       menu: z.string().optional(),
       hours: z.string().optional(),
       serviceOptions: z.array(z.string()).optional(),
-      googleMapsUrl: z.string().url().optional(),
-      mapEmbedUrl: z.string().url().optional(),
+      googleMapsUrl: z.string().optional(),
+      mapEmbedUrl: z.string().optional(),
     }).optional(),
+
+    // Recipe-specific fields
+    servings: z.number().or(z.string()).optional(),
+    totalCalories: z.number().or(z.string()).optional(),
+    prepTime: z.string().optional(),
+    cookTime: z.string().optional(),
+    ingredients: z.array(z.string()).optional().default([]),
+    instructions: z.array(z.string()).optional().default([]),
   }),
 });
 
