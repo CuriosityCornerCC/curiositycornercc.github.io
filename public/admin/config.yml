@@ -13,15 +13,29 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Type", name: "type", widget: "select", options: ["article", "recipe"], default: "article" }
+      - { label: "Page Type", name: "type", widget: "select", options: ["article", "recipe"], default: "article" }
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text", required: false }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Updated Date", name: "updatedDate", widget: "datetime", required: false }
-      - { label: "Cover Image", name: "image", widget: "image", default: "/images/pic01.jpg" }
-      - { label: "Author", name: "author", widget: "string", default: "Curiosity Corner" }
-      - { label: "Category", name: "category", widget: "string", default: "General" }
-      - { label: "Featured Post", name: "featured", widget: "boolean", required: false, default: false }
+      - { label: "Category", name: "category", widget: "select", options: ["Crochet", "Grooming", "Date Night", "Tech", "Things to Do", "Local Flavor", "Recipes"], default: "General" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Description", name: "description", widget: "string", required: false }
+      - { label: "Cover Image", name: "image", widget: "image", required: false, default: "/images/pic01.jpg" }
+      - { label: "Featured Post", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+
+      # Recipe Fields
+      - label: "Recipe Info"
+        name: "recipeInfo"
+        widget: "object"
+        required: false
+        fields:
+        - { label: "Servings", name: "servings", widget: "number", value_type: "int", required: false }
+        - { label: "Total Calories", name: "totalCalories", widget: "number", value_type: "int", required: false }
+        - { label: "Prep Time", name: "prepTime", widget: "string", required: false, hint: "e.g. 15 mins" }
+        - { label: "Cook Time", name: "cookTime", widget: "string", required: false, hint: "e.g. 45 mins" }
+        - { label: "Ingredients", name: "ingredients", widget: "list", required: false }
+        - { label: "Instructions", name: "instructions", widget: "list", required: false }
+
 
       # Google Business Location Fields
       - label: "Google Business / Location Info"
@@ -42,13 +56,3 @@ collections:
           - { label: "Service Options", name: "serviceOptions", widget: "list", required: false }
           - { label: "Google Maps Directions Link", name: "googleMapsUrl", widget: "string", required: false }
           - { label: "Google Maps Embed URL", name: "mapEmbedUrl", widget: "string", required: false }
-
-      # Recipe Fields
-      - { label: "Servings", name: "servings", widget: "string", required: false }
-      - { label: "Total Calories", name: "totalCalories", widget: "string", required: false }
-      - { label: "Prep Time", name: "prepTime", widget: "string", required: false }
-      - { label: "Cook Time", name: "cookTime", widget: "string", required: false }
-      - { label: "Ingredients", name: "ingredients", widget: "list", required: false }
-      - { label: "Instructions", name: "instructions", widget: "list", required: false }
-
-      - { label: "Body", name: "body", widget: "markdown" }
