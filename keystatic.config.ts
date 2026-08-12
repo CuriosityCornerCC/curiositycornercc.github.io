@@ -2,39 +2,56 @@ import { config, fields, collection } from '@keystatic/core';
 
 export default config({
   storage: {
-    kind: 'local',
+    kind: 'github',
+    repo: 'curiositycornercc/curiositycornercc.github.io',
   },
   collections: {
-    posts: collection({
-      label: 'Posts',
+    blog: collection({
+      label: 'Blog Posts',
       slugField: 'title',
       path: 'src/content/blog/*',
       format: { contentField: 'content' },
       schema: {
-        type: fields.select({
-          label: 'Page Type',
-          options: [
-            { label: 'Blog Article', value: 'article' },
-            { label: 'Recipe', value: 'recipe' },
-          ],
-          defaultValue: 'article',
-        }),
-        title: fields.text({ label: 'Title' }),
+        title: fields.slug({ name: { label: 'Title' } }),
         description: fields.text({ label: 'Description', multiline: true }),
-        pubDate: fields.date({ label: 'Published Date' }),
-        image: fields.text({ label: 'Cover Image URL' }),
-        category: fields.text({ label: 'Category' }),
-        servings: fields.integer({ label: 'Servings' }),
-        totalCalories: fields.integer({ label: 'Total Calories' }),
-        prepTime: fields.text({ label: 'Prep Time' }),
-        cookTime: fields.text({ label: 'Cook Time' }),
-        ingredients: fields.array(fields.text({ label: 'Ingredient' }), {
-          label: 'Ingredients',
-          itemLabel: (props) => props.value,
+        pubDate: fields.date({ label: 'Publish Date' }),
+        updatedDate: fields.date({ label: 'Updated Date' }),
+        heroImage: fields.image({
+          label: 'Hero Image',
+          directory: 'public/images',
+          publicPath: '/images/',
         }),
-        instructions: fields.array(fields.text({ label: 'Step' }), {
-          label: 'Instructions',
-          itemLabel: (props) => props.value,
+        category: fields.select({
+          label: 'Category',
+          options: [
+            { label: 'Date Nights', value: 'Date Nights' },
+            { label: 'Grooming & Lifestyle', value: 'Grooming' },
+            { label: 'Recipes', value: 'Recipes' },
+            { label: 'Travel', value: 'Travel' },
+            { label: 'General', value: 'General' },
+          ],
+          defaultValue: 'General',
+        }),
+        featured: fields.checkbox({ label: 'Featured Post', defaultValue: false }),
+        location: fields.object({
+          name: fields.text({ label: 'Business / Place Name' }),
+          category: fields.text({ label: 'Category (e.g. Restaurant, Pottery Studio)' }),
+          rating: fields.number({ label: 'Google Rating (e.g. 4.2)', validation: { min: 0, max: 5 } }),
+          reviewsCount: fields.number({ label: 'Number of Reviews (e.g. 142)' }),
+          address: fields.text({ label: 'Address' }),
+          locatedIn: fields.text({ label: 'Located In (e.g. Action Arena)' }),
+          phone: fields.text({ label: 'Phone Number' }),
+          website: fields.text({ label: 'Business Website URL' }),
+          menu: fields.text({ label: 'Menu URL or Domain' }),
+          hours: fields.text({ label: 'Hours (e.g. Open · Closes 9 PM)' }),
+          serviceOptions: fields.array(
+            fields.text({ label: 'Service Option' }),
+            { label: 'Service Options (e.g. Outdoor seating, Fireplace)', itemLabel: props => props.value }
+          ),
+          googleMapsUrl: fields.text({ label: 'Google Maps Directions URL' }),
+          mapEmbedUrl: fields.text({ label: 'Google Maps Embed iframe URL' }),
+        }, {
+          label: 'Google Business / Location Information (Optional)',
         }),
         content: fields.markdoc({ label: 'Content' }),
       },

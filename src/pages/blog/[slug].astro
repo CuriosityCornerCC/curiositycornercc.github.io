@@ -1,99 +1,43 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import RecipeCard from '../../components/RecipeCard.astro';
+import GoogleBusinessCard from '../../components/GoogleBusinessCard.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
-    params: { slug: post.slug || post.id },
+    params: { slug: post.id },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
-
-let Content;
-if (typeof render === 'function') {
-  const rendered = await render(post);
-  Content = rendered.Content;
-} else if (typeof post.render === 'function') {
-  const rendered = await post.render();
-  Content = rendered.Content;
-}
-
-const coverImage = post.data.image || '/images/pic01.jpg';
-const isRecipe = post.data.type === 'recipe';
+const { Content } = await post.render();
+const { location } = post.data;
 ---
 
-<BaseLayout
-  title={`${post.data.title} | Curiosity Corner`}
-  description={post.data.description}
-  image={coverImage}
-  articleDate={new Date(post.data.pubDate)}
-  updatedDate={post.data.updatedDate ? new Date(post.data.updatedDate) : undefined}
-  author={post.data.author}
-  type={isRecipe ? 'recipe' : 'article'}
-  servings={post.data.servings}
-  totalCalories={post.data.totalCalories}
-  prepTime={post.data.prepTime}
-  cookTime={post.data.cookTime}
-  ingredients={post.data.ingredients}
-  instructions={post.data.instructions}
-  hideDefaultHeader={true}
->
-  <!-- Blog Cover Hero Banner -->
-  <div class="blog-hero" style={`background-image: url('${coverImage}');`}>
-    <div class="blog-hero-overlay"></div>
-
-    <div class="blog-hero-top">
-      <a href="/" class="logo"><strong>Curiosity Corner</strong></a>
-      <ul class="icons">
-        <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-        <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="https://github.com/curiositycornercc" target="_blank" rel="noopener noreferrer" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-      </ul>
-    </div>
-
-    <div class="blog-hero-bottom">
-      <h1>{post.data.title}</h1>
-      <p class="meta">
-        Published on {new Date(post.data.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-        {post.data.author && <span> by <strong>{post.data.author}</strong></span>}
-        {post.data.category && (
-          <span> | Category: <a href={`/category/${post.data.category.toLowerCase()}`}>{post.data.category}</a></span>
-        )}
-      </p>
-    </div>
-  </div>
-
-  <!-- Main Article Body -->
+<BaseLayout title={post.data.title} description={post.data.description}>
   <article class="post">
-    <!-- "Jump to Recipe" Button for Recipe posts -->
-    {isRecipe && (
-      <div class="jump-recipe-container">
-        <a href="#recipe-card" class="button primary icon solid fa-utensils jump-recipe-btn">
-          Jump to Recipe
-        </a>
-      </div>
-    )}
+    <header class="post-header">
+      <h1>{post.data.title}</h1>
+      <p class="post-meta">
+        Published on {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        {post.data.category && ` · Category: ${post.data.category}`}
+      </p>
+      {post.data.heroImage && (
+        <img src={post.data.heroImage} alt={post.data.title} class="hero-image" />
+      )}
+    </header>
 
-    <div class="content">
-      {Content ? <Content /> : <p>No content available.</p>}
+    <div class="post-content">
+      <Content />
     </div>
 
-    <!-- Render Recipe Card if template is Recipe -->
-    {isRecipe && (
-      <RecipeCard
-        title={post.data.title}
-        servings={post.data.servings}
-        totalCalories={post.data.totalCalories}
-        prepTime={post.data.prepTime}
-        cookTime={post.data.cookTime}
-        ingredients={post.data.ingredients}
-        instructions={post.data.instructions}
-      />
+    {location && (
+      <section class="post-location">
+        <h2>Location & Business Details</h2>
+        <GoogleBusinessCard {...location} />
+      </section>
     )}
   </article>
 </BaseLayout>

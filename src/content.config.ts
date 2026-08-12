@@ -32,6 +32,23 @@ const blog = defineCollection({
     cookTime: z.string().optional().nullable().default(''),
     ingredients: z.array(z.string()).optional().nullable().default([]),
     instructions: z.array(z.string()).optional().nullable().default([]),
+
+    // Google Location Card
+    location: z.object({
+      name: z.string(),
+      rating: z.number().optional(),
+      reviewsCount: z.number().optional(),
+      category: z.string().optional(),
+      address: z.string().optional(),
+      locatedIn: z.string().optional(),
+      phone: z.string().optional(),
+      website: z.string().url().optional(),
+      menu: z.string().optional(),
+      hours: z.string().optional(),
+      serviceOptions: z.array(z.string()).optional(),
+      googleMapsUrl: z.string().url().optional(),
+      mapEmbedUrl: z.string().url().optional(),
+    }).optional(),
   }),
 });
 

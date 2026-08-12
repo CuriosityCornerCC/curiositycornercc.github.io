@@ -1,0 +1,132 @@
+---
+// src/components/GoogleBusinessCard.astro
+interface Props {
+  name: string;
+  rating?: number;
+  reviewsCount?: number;
+  category?: string;
+  address?: string;
+  locatedIn?: string;
+  phone?: string;
+  website?: string;
+  menu?: string;
+  hours?: string;
+  serviceOptions?: string[];
+  googleMapsUrl?: string;
+  mapEmbedUrl?: string;
+}
+
+const {
+  name,
+  rating = 4.2,
+  reviewsCount = 142,
+  category = "Restaurant",
+  address,
+  locatedIn,
+  phone,
+  website,
+  menu,
+  hours = "Open · Closes 9 pm",
+  serviceOptions = [],
+  googleMapsUrl,
+  mapEmbedUrl,
+} = Astro.props;
+
+// Calculate stars
+const fullStars = Math.floor(rating);
+const hasHalfStar = rating % 1 >= 0.3;
+const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+---
+
+<div class="google-place-card">
+  <div class="card-header">
+    <div class="title-row">
+      <h3>{name}</h3>
+      <span class="category-tag">{category}</span>
+    </div>
+
+    {rating && (
+      <div class="rating-row">
+        <span class="rating-score">{rating.toFixed(1)}</span>
+        <div class="stars-container" aria-label={`Rating: ${rating} out of 5 stars`}>
+          {Array.from({ length: fullStars }).map(() => (
+            <span class="star full">★</span>
+          ))}
+          {hasHalfStar && <span class="star half">★</span>}
+          {Array.from({ length: emptyStars }).map(() => (
+            <span class="star empty">★</span>
+          ))}
+        </div>
+        <span class="review-count">({reviewsCount} reviews)</span>
+      </div>
+    )}
+  </div>
+
+  <div class="action-buttons">
+    {website && (
+      <a href={website} target="_blank" rel="noopener noreferrer" class="place-btn">
+        <i class="fas fa-globe"></i> Website
+      </a>
+    )}
+    {googleMapsUrl && (
+      <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" class="place-btn primary">
+        <i class="fas fa-directions"></i> Directions
+      </a>
+    )}
+  </div>
+
+  <div class="info-list">
+    {serviceOptions.length > 0 && (
+      <div class="info-item">
+        <span class="info-label">Service options:</span>
+        <span>{serviceOptions.join(" · ")}</span>
+      </div>
+    )}
+    {locatedIn && (
+      <div class="info-item">
+        <span class="info-label">Located in:</span>
+        <span>{locatedIn}</span>
+      </div>
+    )}
+    {address && (
+      <div class="info-item">
+        <span class="info-label">Address:</span>
+        <span>{address}</span>
+      </div>
+    )}
+    {phone && (
+      <div class="info-item">
+        <span class="info-label">Phone:</span>
+        <a href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
+      </div>
+    )}
+    {menu && (
+      <div class="info-item">
+        <span class="info-label">Menu:</span>
+        <a href={menu.startsWith('http') ? menu : `https://${menu}`} target="_blank" rel="noopener noreferrer">
+          {menu.replace(/^https?:\/\//, '')}
+        </a>
+      </div>
+    )}
+    {hours && (
+      <div class="info-item">
+        <span class="info-label">Hours:</span>
+        <span class="status-open">{hours}</span>
+      </div>
+    )}
+  </div>
+
+  {mapEmbedUrl && (
+    <div class="map-preview">
+      <iframe
+        src={mapEmbedUrl}
+        width="100%"
+        height="160"
+        style="border:0; border-radius: 8px;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  )}
+</div>
