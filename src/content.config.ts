@@ -5,8 +5,8 @@ const blog = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: z.object({
     type: z.enum(['article', 'recipe']).default('article'),
-    title: z.string().max(70, "Keep titles under 70 characters for best SEO display"),
-    description: z.string().max(160, "Keep descriptions under 160 characters for search results").optional().nullable(),
+    title: z.string(),
+    description: z.string().optional().nullable(),
     pubDate: z.string().or(z.date()),
     updatedDate: z.string().or(z.date()).optional().nullable(),
     image: z.string().default('/images/pic01.jpg'),
@@ -31,7 +31,7 @@ const blog = defineCollection({
       mapEmbedUrl: z.string().optional().nullable(),
     }).optional().nullable(),
 
-    // Recipe-specific fields (supports nulls from CMS)
+    // Recipe-specific fields
     servings: z.number().or(z.string()).optional().nullable(),
     totalCalories: z.number().or(z.string()).optional().nullable(),
     prepTime: z.string().optional().nullable(),
