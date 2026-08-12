@@ -2,9 +2,9 @@
 // src/components/GoogleBusinessCard.astro
 interface Props {
   name: string;
+  category?: string;
   rating?: number;
   reviewsCount?: number;
-  category?: string;
   address?: string;
   locatedIn?: string;
   phone?: string;
@@ -18,114 +18,120 @@ interface Props {
 
 const {
   name,
+  category = "Restaurant",
   rating = 4.2,
   reviewsCount = 142,
-  category = "Restaurant",
   address,
   locatedIn,
   phone,
   website,
   menu,
-  hours = "Open · Closes 9 pm",
+  hours = "Open · Closes 9 PM",
   serviceOptions = [],
   googleMapsUrl,
   mapEmbedUrl,
 } = Astro.props;
 
-// Calculate stars
 const fullStars = Math.floor(rating);
-const hasHalfStar = rating % 1 >= 0.3;
+const hasHalfStar = rating % 1 >= 0.3 && rating % 1 <= 0.8;
 const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 ---
 
-<div class="google-place-card">
-  <div class="card-header">
-    <div class="title-row">
-      <h3>{name}</h3>
-      <span class="category-tag">{category}</span>
+<div class="google-business-card">
+  <div class="gbc-header">
+    <div class="gbc-title-group">
+      <h3 class="gbc-name">{name}</h3>
+      {category && <span class="gbc-category">{category}</span>}
     </div>
 
-    {rating && (
-      <div class="rating-row">
-        <span class="rating-score">{rating.toFixed(1)}</span>
-        <div class="stars-container" aria-label={`Rating: ${rating} out of 5 stars`}>
+    {rating !== undefined && (
+      <div class="gbc-rating-row">
+        <span class="gbc-score">{rating.toFixed(1)}</span>
+        <div class="gbc-stars" aria-label={`Rating: ${rating} out of 5 stars`}>
           {Array.from({ length: fullStars }).map(() => (
             <span class="star full">★</span>
           ))}
           {hasHalfStar && <span class="star half">★</span>}
-          {Array.from({ length: emptyStars }).map(() => (
+          {Array.from({ length: Math.max(0, emptyStars) }).map(() => (
             <span class="star empty">★</span>
           ))}
         </div>
-        <span class="review-count">({reviewsCount} reviews)</span>
+        {reviewsCount !== undefined && (
+          <span class="gbc-reviews">({reviewsCount.toLocaleString()} reviews)</span>
+        )}
       </div>
     )}
   </div>
 
-  <div class="action-buttons">
+  <div class="gbc-actions">
     {website && (
-      <a href={website} target="_blank" rel="noopener noreferrer" class="place-btn">
+      <a href={website} target="_blank" rel="noopener noreferrer" class="gbc-btn">
         <i class="fas fa-globe"></i> Website
       </a>
     )}
     {googleMapsUrl && (
-      <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" class="place-btn primary">
+      <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer" class="gbc-btn primary">
         <i class="fas fa-directions"></i> Directions
       </a>
     )}
   </div>
 
-  <div class="info-list">
-    {serviceOptions.length > 0 && (
-      <div class="info-item">
-        <span class="info-label">Service options:</span>
-        <span>{serviceOptions.join(" · ")}</span>
+  <div class="gbc-details">
+    {serviceOptions && serviceOptions.length > 0 && (
+      <div class="gbc-detail-item">
+        <span class="gbc-label">Service options:</span>
+        <span class="gbc-value">{serviceOptions.join(" · ")}</span>
       </div>
     )}
     {locatedIn && (
-      <div class="info-item">
-        <span class="info-label">Located in:</span>
-        <span>{locatedIn}</span>
+      <div class="gbc-detail-item">
+        <span class="gbc-label">Located in:</span>
+        <span class="gbc-value">{locatedIn}</span>
       </div>
     )}
     {address && (
-      <div class="info-item">
-        <span class="info-label">Address:</span>
-        <span>{address}</span>
+      <div class="gbc-detail-item">
+        <span class="gbc-label">Address:</span>
+        <span class="gbc-value">{address}</span>
       </div>
     )}
     {phone && (
-      <div class="info-item">
-        <span class="info-label">Phone:</span>
-        <a href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
+      <div class="gbc-detail-item">
+        <span class="gbc-label">Phone:</span>
+        <span class="gbc-value">
+          <a href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
+        </span>
       </div>
     )}
     {menu && (
-      <div class="info-item">
-        <span class="info-label">Menu:</span>
-        <a href={menu.startsWith('http') ? menu : `https://${menu}`} target="_blank" rel="noopener noreferrer">
-          {menu.replace(/^https?:\/\//, '')}
-        </a>
+      <div class="gbc-detail-item">
+        <span class="gbc-label">Menu:</span>
+        <span class="gbc-value">
+          <a href={menu.startsWith('http') ? menu : `https://${menu}`} target="_blank" rel="noopener noreferrer">
+            {menu.replace(/^https?:\/\//, '')}
+          </a>
+        </span>
       </div>
     )}
     {hours && (
-      <div class="info-item">
-        <span class="info-label">Hours:</span>
-        <span class="status-open">{hours}</span>
+      <div class="gbc-detail-item">
+        <span class="gbc-label">Hours:</span>
+        <span class="gbc-value status-open">{hours}</span>
       </div>
     )}
   </div>
 
   {mapEmbedUrl && (
-    <div class="map-preview">
+    <div class="gbc-map">
       <iframe
         src={mapEmbedUrl}
         width="100%"
-        height="160"
+        height="180"
         style="border:0; border-radius: 8px;"
         allowfullscreen=""
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
+        title={`Map for ${name}`}
       ></iframe>
     </div>
   )}
