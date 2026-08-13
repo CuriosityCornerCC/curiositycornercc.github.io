@@ -3,14 +3,14 @@ type: recipe
 title: The art of Melkkos
 category: Recipes
 pubDate: 2026-08-13
-description: is essentially a runny milk tart with deliberate lumps, served hot with cinnamon sugar.
+description: It is essentially a runny milk tart with deliberate lumps, served hot with cinnamon sugar.
 image: /images/Gemini_Generated_Image_efh52xefh52xefh5.png
 featured: false
 recipeInfo:
   servings: 4
-  totalCalories: null
-  prepTime: ''
-  cookTime: ''
+  totalCalories: 0
+  prepTime: '10'
+  cookTime: '15'
   ingredients:
     - 3 cups full cream milk (don't even think about skim)
     - 3 tbsp unrefined sugar or castor sugar
