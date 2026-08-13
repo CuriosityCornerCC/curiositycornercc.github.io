@@ -23,7 +23,13 @@ if (typeof render === 'function') {
 }
 
 const coverImage = post.data.image || '/images/pic01.jpg';
-const isRecipe = post.data.type === 'recipe';
+
+// Robust recipe detection
+const isRecipe =
+  post.data.type === 'recipe' ||
+  post.data.category?.toLowerCase() === 'recipes' ||
+  (Array.isArray(post.data.ingredients) && post.data.ingredients.length > 0) ||
+  (typeof post.data.ingredients === 'string' && post.data.ingredients.trim().length > 0);
 ---
 
 <BaseLayout
