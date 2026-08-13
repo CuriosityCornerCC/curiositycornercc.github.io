@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
-import GoogleBusinessCard from '../../components/GoogleBusinessCard.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -14,12 +13,17 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 
-// Astro 5 content rendering helper
-const { Content } = await render(post);
+let Content;
+if (typeof render === 'function') {
+  const rendered = await render(post);
+  Content = rendered.Content;
+} else if (typeof post.render === 'function') {
+  const rendered = await post.render();
+  Content = rendered.Content;
+}
 
 const coverImage = post.data.image || '/images/pic01.jpg';
 const isRecipe = post.data.type === 'recipe';
-const location = post.data.location;
 ---
 
 <BaseLayout
@@ -76,16 +80,8 @@ const location = post.data.location;
     )}
 
     <div class="content">
-      <Content />
+      {Content ? <Content /> : <p>No content available.</p>}
     </div>
-
-    <!-- Google Business Place Card -->
-    {location && (
-      <section class="location-section" style="margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
-        <h3>Location & Business Info</h3>
-        <GoogleBusinessCard {...location} />
-      </section>
-    )}
 
     <!-- Render Recipe Card if template is Recipe -->
     {isRecipe && (
