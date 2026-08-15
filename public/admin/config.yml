@@ -13,28 +13,17 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "Page Type", name: "type", widget: "select", options: ["article", "recipe"], default: "article" }
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "select", options: ["Crochet", "Grooming", "Date Night", "Tech", "Things to Do", "Local Flavor", "Recipes"], default: "General" }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Description", name: "description", widget: "string", required: false }
-      - { label: "Cover Image", name: "image", widget: "image", required: false, default: "/images/pic01.jpg" }
-      - { label: "Featured Post", name: "featured", widget: "boolean", default: false, required: false }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Recipe Image", name: "image", widget: "image", required: false }
+      - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
+      - { label: "Prep Time", name: "prepTime", widget: "string", required: false }
+      - { label: "Cook Time", name: "cookTime", widget: "string", required: false }
+      - { label: "Servings", name: "servings", widget: "string", required: false }
+      - { label: "Ingredients", name: "ingredients", widget: "list", required: false }
+      - { label: "Instructions", name: "instructions", widget: "list", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
-
-
-      # Recipe Fields
-      - label: "Recipe Info"
-        name: "recipeInfo"
-        widget: "object"
-        required: false
-        fields:
-        - { label: "Servings", name: "servings", widget: "number", value_type: "int", required: false }
-        - { label: "Total Calories", name: "totalCalories", widget: "number", value_type: "int", required: false }
-        - { label: "Prep Time", name: "prepTime", widget: "string", required: false, hint: "e.g. 15 mins" }
-        - { label: "Cook Time", name: "cookTime", widget: "string", required: false, hint: "e.g. 45 mins" }
-        - { label: "Ingredients", name: "ingredients", widget: "list", required: false }
-        - { label: "Instructions", name: "instructions", widget: "list", required: false }
 
 
       # Google Business Location Fields
