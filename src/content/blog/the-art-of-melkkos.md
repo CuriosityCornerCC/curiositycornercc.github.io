@@ -62,4 +62,4 @@ For the chocolate crumbs, just remember the 2x rule: Double the butter, flour, a
 
 > 1 Cup Milk  --->  2 Tbsp Butter + 2 Tbsp Cacao Powder + 2 Cups Flour
 
-Crucial rule: Kill the stove heat before dumping in your dry mix. Boiling milk holds more than enough residual heat to cook the krummels. Stir slowly. Maintain the integrity of the lump.
+**Crucial rule:** Kill the stove heat before dumping in your dry mix. Boiling milk holds more than enough residual heat to cook the krummels. Stir slowly. Maintain the integrity of the lump.
