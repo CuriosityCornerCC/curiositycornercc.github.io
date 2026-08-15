@@ -1,15 +1,12 @@
 ---
-type: recipe
 title: The art of Melkkos
-category: Recipes
 pubDate: 2026-08-13
 description: It is essentially a runny milk tart with deliberate lumps, served hot with cinnamon sugar.
 image: /images/Gemini_Generated_Image_efh52xefh52xefh5.png
-featured: false
-servings: 4
-totalCalories: 0
+imageAlt: ''
 prepTime: '10'
 cookTime: '15'
+servings: '4'
 ingredients:
   - 3 cups full cream milk (don't even think about skim)
   - 3 tbsp unrefined sugar or castor sugar
@@ -32,6 +29,10 @@ instructions:
   - 'Finish: Pull the pot off the heat entirely and fold in the salt and vanilla extract.'
   - 'Serve: Ladle it hot into bowls. Top with dark chocolate shavings or toasted coconut. Eat it on the couch while ignoring your whatsapp notifications.'
 location: null
+type: recipe
+category: Recipes
+featured: false
+totalCalories: 0
 ---
 
 Growing up, ‘melkkos’ was this mysterious, off-limits staple in Afrikaans homes that I was forbidden from experiencing. Every time I begged my mother to make it, she simply responded with those famous words: “You won’t like it.” I dropped it, arguing with her was a losing battle. 
@@ -57,7 +58,7 @@ There was just one problem: my husband hates cinnamon. So to keep the peace in t
 
 ## THE FORMULA (DON'T PANIC, IT'S BASIC MATH)
 
-> For the chocolate crumbs, just remember the 2x rule: Double the butter, flour, and cocoa relative to the milk unit.
+For the chocolate crumbs, just remember the 2x rule: Double the butter, flour, and cocoa relative to the milk unit.
 
 > 1 Cup Milk  --->  2 Tbsp Butter + 2 Tbsp Cacao Powder + 2 Cups Flour
 
