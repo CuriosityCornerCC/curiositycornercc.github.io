@@ -24,12 +24,25 @@ if (typeof render === 'function') {
 
 const coverImage = post.data.image || '/images/pic01.jpg';
 
+// Resolve recipe properties with fallback for nested recipeInfo objects
+const recipeData = {
+  servings: post.data.servings ?? post.data.recipeInfo?.servings,
+  totalCalories: post.data.totalCalories ?? post.data.recipeInfo?.totalCalories,
+  prepTime: post.data.prepTime ?? post.data.recipeInfo?.prepTime,
+  cookTime: post.data.cookTime ?? post.data.recipeInfo?.cookTime,
+  ingredients: (post.data.ingredients && post.data.ingredients.length > 0)
+    ? post.data.ingredients
+    : (post.data.recipeInfo?.ingredients ?? []),
+  instructions: (post.data.instructions && post.data.instructions.length > 0)
+    ? post.data.instructions
+    : (post.data.recipeInfo?.instructions ?? []),
+};
+
 // Robust recipe detection
 const isRecipe =
   post.data.type === 'recipe' ||
   post.data.category?.toLowerCase() === 'recipes' ||
-  (Array.isArray(post.data.ingredients) && post.data.ingredients.length > 0) ||
-  (typeof post.data.ingredients === 'string' && post.data.ingredients.trim().length > 0);
+  recipeData.ingredients.length > 0;
 ---
 
 <BaseLayout
@@ -40,12 +53,12 @@ const isRecipe =
   updatedDate={post.data.updatedDate ? new Date(post.data.updatedDate) : undefined}
   author={post.data.author}
   type={isRecipe ? 'recipe' : 'article'}
-  servings={post.data.servings}
-  totalCalories={post.data.totalCalories}
-  prepTime={post.data.prepTime}
-  cookTime={post.data.cookTime}
-  ingredients={post.data.ingredients}
-  instructions={post.data.instructions}
+  servings={recipeData.servings}
+  totalCalories={recipeData.totalCalories}
+  prepTime={recipeData.prepTime}
+  cookTime={recipeData.cookTime}
+  ingredients={recipeData.ingredients}
+  instructions={recipeData.instructions}
   hideDefaultHeader={true}
 >
   <!-- Blog Cover Hero Banner -->
@@ -93,12 +106,12 @@ const isRecipe =
     {isRecipe && (
       <RecipeCard
         title={post.data.title}
-        servings={post.data.servings}
-        totalCalories={post.data.totalCalories}
-        prepTime={post.data.prepTime}
-        cookTime={post.data.cookTime}
-        ingredients={post.data.ingredients}
-        instructions={post.data.instructions}
+        servings={recipeData.servings}
+        totalCalories={recipeData.totalCalories}
+        prepTime={recipeData.prepTime}
+        cookTime={recipeData.cookTime}
+        ingredients={recipeData.ingredients}
+        instructions={recipeData.instructions}
       />
     )}
   </article>

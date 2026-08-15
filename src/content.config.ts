@@ -31,13 +31,23 @@ const blog = defineCollection({
       mapEmbedUrl: z.string().optional().nullable(),
     }).optional().nullable(),
 
-    // Recipe-specific fields
+    // Top-level Recipe fields
     servings: z.number().or(z.string()).optional().nullable(),
     totalCalories: z.number().or(z.string()).optional().nullable(),
     prepTime: z.string().optional().nullable(),
     cookTime: z.string().optional().nullable(),
     ingredients: z.array(z.string()).optional().default([]),
     instructions: z.array(z.string()).optional().default([]),
+
+    // Nested Recipe object schema for CMS compatibility
+    recipeInfo: z.object({
+      servings: z.number().or(z.string()).optional().nullable(),
+      totalCalories: z.number().or(z.string()).optional().nullable(),
+      prepTime: z.string().optional().nullable(),
+      cookTime: z.string().optional().nullable(),
+      ingredients: z.array(z.string()).optional().default([]),
+      instructions: z.array(z.string()).optional().default([]),
+    }).optional().nullable(),
   }),
 });
 
