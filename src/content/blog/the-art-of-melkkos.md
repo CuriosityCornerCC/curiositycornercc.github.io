@@ -1,32 +1,35 @@
 ---
-type: "recipe"
-title: "The art of Melkkos"
-description: "It is essentially a runny milk tart with deliberate lumps, served hot with cinnamon sugar."
-cover_image:
-  image: "/images/Gemini_Generated_Image_efh52xefh52xefh5.png"
-  alt: "Bowl of traditional Melkkos with cinnamon sugar"
-recipe:
-  ingredients:
-    - "3 cups full cream milk (don't even think about skim)"
-    - "3 tbsp unrefined sugar or castor sugar"
-    - "2 whole cinnamon sticks"
-    - "1 tsp ground cinnamon (or less) (You can also use cinnamon sticks)"
-    - "1 cardamom pod"
-    - "2 whole cloves"
-    - "1 star anise"
-    - "3 tbsp good quality cocoa powder"
-    - "6 tbsp cold unsalted butter / margarine"
-    - "6 tbsp sifted flour"
-    - "Pinch of fine salt"
-    - "1 tsp vanilla extract"
-  method:
-    - "Infuse the Milk: Toss the milk, sugar, whole spices, cinnamon, vanilla, and sifted cocoa powder into a heavy-bottomed pot over medium heat. Bring it to a gentle simmer for 10 minutes."
-    - "Kill the Heat: Turn off the stove completely and let the pot sit undisturbed for 5 - 10 minutes so the milk absorbs the aromatics."
-    - "Strain: Pour the liquid through a fine mesh sieve to strip out the whole spices, then return the milk to the stove on the lowest setting."
-    - "Build the Crumbs: In a separate bowl, work the cold butter into the sifted cake flour with your fingertips until it forms a rough, clumpy paste."
-    - "Combine: Gently whisk the flour paste into the hot milk. Let it thicken over low heat until smooth and velvety. If the milk has cooled down too much, heat it up again but do not boil it. Remember all you want to do is maintain the integrity of the lumps - how you do that is up to you."
-    - "Finish: Pull the pot off the heat entirely and fold in the salt and vanilla extract."
-    - "Serve: Ladle it hot into bowls. Top with dark chocolate shavings or toasted coconut. Eat it on the couch while ignoring your whatsapp notifications."
+type: recipe
+title: The art of Melkkos
+category: Recipes
+pubDate: 2026-08-13
+description: It is essentially a runny milk tart with deliberate lumps, served hot with cinnamon sugar.
+image: /images/Gemini_Generated_Image_efh52xefh52xefh5.png
+imageAlt: 'Bowl of traditional Melkkos with cinnamon sugar'
+prepTime: '10'
+cookTime: '15'
+servings: '4'
+ingredients:
+  - 3 cups full cream milk (don't even think about skim)
+  - 3 tbsp unrefined sugar or castor sugar
+  - 2 whole cinnamon sticks
+  - 1 tsp ground cinnamon (or less) (You can also use cinnamon sticks)
+  - 1 cardamom pod
+  - 2 whole cloves
+  - 1 star anise
+  - 3 tbsp good quality cocoa powder
+  - 6 tbsp cold unsalted butter / margarine
+  - 6 tbsp sifted flour
+  - Pinch of fine salt
+  - 1 tsp vanilla extract
+instructions:
+  - 'Infuse the Milk: Toss the milk, sugar, whole spices, cinnamon, vanilla, and sifted cocoa powder into a heavy-bottomed pot over medium heat. Bring it to a gentle simmer for 10 minutes.'
+  - 'Kill the Heat: Turn off the stove completely and let the pot sit undisturbed for 5 - 10 minutes so the milk absorbs the aromatics.'
+  - 'Strain: Pour the liquid through a fine mesh sieve to strip out the whole spices, then return the milk to the stove on the lowest setting.'
+  - 'Build the Crumbs: In a separate bowl, work the cold butter into the sifted cake flour with your fingertips until it forms a rough, clumpy paste.'
+  - 'Combine: Gently whisk the flour paste into the hot milk. Let it thicken over low heat until smooth and velvety. If the milk has cooled down too much, heat it up again but do not boil it. Remember all you want to do is maintain the integrity of the lumps - how you do that is up to you.'
+  - 'Finish: Pull the pot off the heat entirely and fold in the salt and vanilla extract.'
+  - 'Serve: Ladle it hot into bowls. Top with dark chocolate shavings or toasted coconut. Eat it on the couch while ignoring your whatsapp notifications.'
 ---
 
 Growing up, ‘melkkos’ was this mysterious, off-limits staple in Afrikaans homes that I was forbidden from experiencing. Every time I begged my mother to make it, she simply responded with those famous words: “You won’t like it.” I dropped it, arguing with her was a losing battle. 

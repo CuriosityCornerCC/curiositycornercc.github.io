@@ -1,10 +1,11 @@
 ---
-type: "blog"
+type: article
 title: "The N$50 Clay Date Night in Windhoek"
+category: "Date Night"
+pubDate: "2026-08-09"
 description: "After 18 years together, date nights get tricky. Learn how to host a hilarious, budget-friendly date night in Windhoek with under N$50 of clay."
-cover_image:
-  image: "/images/Date_Night_Take_1.jpg"
-  alt: "Date Night clay craft setup"
+image: "/images/Date_Night_Take_1.jpg"
+imageAlt: "Clay date night setup with drinks and modeling clay"
 ---
 
 After 18 years together date nights get rather tricky, and it has nothing to do with love. It simply happens because you’ve officially run out of interesting things to talk about. So you become desperate - until you realise you can have a fun date night for under N$ 50. 
