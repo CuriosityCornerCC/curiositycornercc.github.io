@@ -20,8 +20,6 @@ collections:
         options:
           - { label: "Blog Article", value: "article" }
           - { label: "Recipe", value: "recipe" }
-          - { label: "Grooming", value: "grooming" }
-          - { label: "Date Night", value: "date_night" }
         default: "article"
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Category", name: "category", widget: "string", default: "General" }
@@ -31,17 +29,23 @@ collections:
       - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
       - { label: "Body Content", name: "body", widget: "markdown" }
 
-      # Recipe Specific Fields
-      - { label: "Prep Time", name: "prepTime", widget: "string", required: false }
-      - { label: "Cook Time", name: "cookTime", widget: "string", required: false }
-      - { label: "Servings", name: "servings", widget: "string", required: false }
-      - label: "Ingredients"
-        name: "ingredients"
-        widget: "list"
+      # Recipe Details Widget (Collapsed & optional for regular articles)
+      - label: "Recipe Details"
+        name: "recipeInfo"
+        widget: "object"
         required: false
-        field: { label: "Ingredient", name: "ingredient", widget: "string" }
-      - label: "Instructions / Method"
-        name: "instructions"
-        widget: "list"
-        required: false
-        field: { label: "Step", name: "step", widget: "text" }
+        collapsed: true
+        fields:
+          - { label: "Prep Time", name: "prepTime", widget: "string", required: false }
+          - { label: "Cook Time", name: "cookTime", widget: "string", required: false }
+          - { label: "Servings", name: "servings", widget: "string", required: false }
+          - label: "Ingredients"
+            name: "ingredients"
+            widget: "list"
+            required: false
+            field: { label: "Ingredient", name: "ingredient", widget: "string" }
+          - label: "Instructions"
+            name: "instructions"
+            widget: "list"
+            required: false
+            field: { label: "Step", name: "step", widget: "text" }
