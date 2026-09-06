@@ -8,40 +8,40 @@ public_folder: "/images"
 
 collections:
   - name: "blog"
-    label: "Blog Posts"
+    label: "Blog Posts & Recipes"
+    label_singular: "Post"
     folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
     fields:
+      - label: "Page Type"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Blog Article", value: "blog" }
+          - { label: "Recipe", value: "recipe" }
+          - { label: "Grooming", value: "grooming" }
+          - { label: "Date Night", value: "date_night" }
+        default: "blog"
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Description", name: "description", widget: "text", required: false }
-      - { label: "Recipe Image", name: "image", widget: "image", required: false }
-      - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
-      - { label: "Prep Time", name: "prepTime", widget: "string", required: false }
-      - { label: "Cook Time", name: "cookTime", widget: "string", required: false }
-      - { label: "Servings", name: "servings", widget: "string", required: false }
-      - { label: "Ingredients", name: "ingredients", widget: "list", required: false }
-      - { label: "Instructions", name: "instructions", widget: "list", required: false }
-      - { label: "Body", name: "body", widget: "markdown" }
-
-
-      # Google Business Location Fields
-      - label: "Google Business / Location Info"
-        name: "location"
+      - { label: "Description (Meta)", name: "description", widget: "text", hint: "Used for search engine meta descriptions." }
+      - label: "Cover Image"
+        name: "cover_image"
+        widget: "object"
+        fields:
+          - { label: "Image", name: "image", widget: "image" }
+          - { label: "Alt Text", name: "alt", widget: "string" }
+      - { label: "Body Content", name: "body", widget: "markdown" }
+      - label: "Recipe Details"
+        name: "recipe"
         widget: "object"
         required: false
         fields:
-          - { label: "Business Name", name: "name", widget: "string" }
-          - { label: "Category (e.g. Restaurant, Pottery Studio)", name: "category", widget: "string", required: false }
-          - { label: "Rating (e.g. 4.2)", name: "rating", widget: "number", value_type: "float", required: false }
-          - { label: "Reviews Count (e.g. 142)", name: "reviewsCount", widget: "number", value_type: "int", required: false }
-          - { label: "Address", name: "address", widget: "string", required: false }
-          - { label: "Located In (e.g. Action Arena)", name: "locatedIn", widget: "string", required: false }
-          - { label: "Phone", name: "phone", widget: "string", required: false }
-          - { label: "Website URL", name: "website", widget: "string", required: false }
-          - { label: "Menu URL/Domain", name: "menu", widget: "string", required: false }
-          - { label: "Hours (e.g. Open · Closes 9 PM)", name: "hours", widget: "string", required: false }
-          - { label: "Service Options", name: "serviceOptions", widget: "list", required: false }
-          - { label: "Google Maps Directions Link", name: "googleMapsUrl", widget: "string", required: false }
-          - { label: "Google Maps Embed URL", name: "mapEmbedUrl", widget: "string", required: false }
+          - label: "Ingredients"
+            name: "ingredients"
+            widget: "list"
+            field: { label: "Ingredient", name: "ingredient", widget: "string" }
+          - label: "Method / Steps"
+            name: "method"
+            widget: "list"
+            field: { label: "Step", name: "step", widget: "text" }

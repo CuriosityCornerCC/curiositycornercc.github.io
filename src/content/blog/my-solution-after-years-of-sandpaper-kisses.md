@@ -1,17 +1,10 @@
 ---
-type: article
-title: My solution after years of sandpaper kisses
-category: Grooming
-pubDate: 2026-08-11
-description: 'The strategy was simple: sniff everything, blend by gut instinct, and hope my husband doesn’t break out in hives.'
-image: /images/Dexter_overseeing_beard_oil_testing_process.png
-featured: true
-servings: null
-totalCalories: null
-prepTime: ''
-cookTime: ''
-ingredients: []
-instructions: []
+type: "blog"
+title: "My solution after years of sandpaper kisses"
+description: "The strategy was simple: sniff everything, blend by gut instinct, and hope my husband doesn’t break out in hives."
+cover_image:
+  image: "/images/Dexter_overseeing_beard_oil_testing_process.png"
+  alt: "Dexter overseeing beard oil testing process"
 ---
 
 We’ve been together for years, 18 to be exact, and at this stage of the relationship romance is mostly defined by comfortable silences, avoiding other people, and sharing financial anxiety over municipal bills. 

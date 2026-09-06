@@ -1,15 +1,10 @@
 ---
-title: 'Rosemary Infused Water: The Kitchen Brew Beating Rogaine at Its Own Game'
-pubDate: 2026-09-06T14:23:00
-description: Discover how a simple daily spray of rosemary infused water boosts hair growth, fights dandruff, and competes with Minoxidil without the scalp itch!
-image: /images/Gemini_Generated_Image_txeelwtxeelwtxee.jpg
-imageAlt: Rosemary Mist
-prepTime: ''
-cookTime: ''
-servings: ''
-ingredients: []
-instructions: []
-location: null
+type: "blog"
+title: "Rosemary Infused Water: The Kitchen Brew Beating Rogaine at Its Own Game"
+description: "Discover how a simple daily spray of rosemary infused water boosts hair growth, fights dandruff, and competes with Minoxidil without the scalp itch!"
+cover_image:
+  image: "/images/Gemini_Generated_Image_txeelwtxeelwtxee.jpg"
+  alt: "Rosemary Mist"
 ---
 
 Your spice rack holds a brilliant secret. Rosemary isn't just for roasting crisp potatoes. It might actually heal your tired, thinning hair. Yes, really! People everywhere are misting homemade rosemary infused water daily. It sounds like a quirky social media trend. Yet, plant science fully supports this easy habit. This homemade kitchen brew offers genuine, plant-based scalp care. It brings zero greasy buildup and zero heavy residue. Let's explore why your roots will love this simple herb.
