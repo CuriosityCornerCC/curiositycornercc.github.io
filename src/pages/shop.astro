@@ -1,0 +1,232 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Banner from '../components/Banner.astro';
+import FeatureCard from '../components/FeatureCard.astro';
+import { products } from '../data/products';
+
+// Configuration: Replace with your actual WhatsApp phone number (with country code, no + or spaces)
+const WHATSAPP_NUMBER = "264812345678"; // Example: "264812345678" for Namibia
+
+// Dynamically extract unique categories from products
+const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
+---
+
+<BaseLayout title="Behind the Corner" description="A place to explore and learn about various topics that spark curiosity.">
+  
+  <section>
+    <div class="pod-notice">
+        <h3><i class="fas fa-info-circle"></i> How Ordering Works</h3>
+        <p>All our products are <strong>made on demand</strong> specifically for you once ordered. To place an order, add your items to the cart and click <strong>Checkout via WhatsApp</strong>. We will receive your order details and handle processing and payment with you directly!</p>
+      </div>
+      
+    <!-- Category Filter Buttons -->
+      <div class="filter-container">
+        <strong>Filter by Category:</strong>
+        <div class="filter-buttons">
+          {categories.map((cat) => (
+            <button 
+              class={`button small category-btn ${cat === 'All' ? 'primary' : ''}`}
+              data-category={cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-grid" id="product-grid">
+        {products.map((product) => (
+          <div class="product-card" data-category={product.category}>
+            <div>
+              <span class="product-badge">{product.category}</span>
+              <img src={product.image} alt={product.name} class="product-image" />
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+            </div>
+            <div>
+              <div class="product-price">N${product.price.toFixed(2)}</div>
+              <button 
+                class="button primary fit add-to-cart-btn" 
+                data-id={product.id}
+                data-name={product.name}
+                data-price={product.price}
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    
+      <!-- Floating Cart Toggle Button -->
+  <button id="open-cart-btn" class="cart-toggle-btn">
+    <i class="fab fa-whatsapp" style="font-size: 1.4em;"></i>
+    <span>Cart (<span id="cart-count">0</span>)</span>
+  </button>
+
+  <!-- Cart Backdrop -->
+  <div id="cart-backdrop" class="cart-backdrop"></div>
+
+  <!-- Cart Drawer -->
+  <div id="cart-modal" class="cart-modal">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h3>Your Order</h3>
+      <button id="close-cart-btn" class="button small">&times;</button>
+    </div>
+
+    <div id="cart-items" class="cart-items">
+      <p id="empty-cart-msg">Your cart is currently empty.</p>
+    </div>
+
+    <div style="border-top: 1px solid #e5e7eb; padding-top: 1em;">
+      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 1em;">
+        <span>Total Due:</span>
+        <span id="cart-total">N$ 0.00</span>
+      </div>
+      <button id="whatsapp-checkout-btn" class="button primary fit" style="background-color: #25d366; border-color: #25d366; color: white;">
+        <i class="fab fa-whatsapp"></i> Checkout via WhatsApp
+      </button>
+    </div>
+  </div>
+
+  </section>
+</BaseLayout>
+
+<!-- Client-side JavaScript -->
+  <script is:inline define:vars={{ WHATSAPP_NUMBER }}>
+    let cart = [];
+
+    const cartCountEl = document.getElementById('cart-count');
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartTotalEl = document.getElementById('cart-total');
+    const cartModal = document.getElementById('cart-modal');
+    const cartBackdrop = document.getElementById('cart-backdrop');
+
+    // Toggle Cart Modal
+    function toggleCart(open) {
+      if (open) {
+        cartModal.classList.add('open');
+        cartBackdrop.classList.add('open');
+      } else {
+        cartModal.classList.remove('open');
+        cartBackdrop.classList.remove('open');
+      }
+    }
+
+    document.getElementById('open-cart-btn').addEventListener('click', () => toggleCart(true));
+    document.getElementById('close-cart-btn').addEventListener('click', () => toggleCart(false));
+    cartBackdrop.addEventListener('click', () => toggleCart(false));
+
+    // Category Filter Functionality
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const productCards = document.querySelectorAll('.product-card');
+
+    categoryBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const selectedCategory = btn.getAttribute('data-category');
+
+        // Update button active states
+        categoryBtns.forEach((b) => b.classList.remove('primary'));
+        btn.classList.add('primary');
+
+        // Filter products
+        productCards.forEach((card) => {
+          const cardCategory = card.getAttribute('data-category');
+          if (selectedCategory === 'All' || cardCategory === selectedCategory) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Add to Cart Logic
+    document.querySelectorAll('.add-to-cart-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        const name = btn.getAttribute('data-name');
+        const price = parseFloat(btn.getAttribute('data-price'));
+
+        const existingItem = cart.find((item) => item.id === id);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          cart.push({ id, name, price, quantity: 1 });
+        }
+
+        updateCartUI();
+        toggleCart(true);
+      });
+    });
+
+    // Update Cart UI
+    function updateCartUI() {
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+      cartCountEl.textContent = totalItems;
+      cartTotalEl.textContent = `N$${totalPrice.toFixed(2)}`;
+
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<p>Your cart is currently empty.</p>';
+        return;
+      }
+
+      cartItemsEl.innerHTML = '';
+      cart.forEach((item) => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'cart-item';
+        itemEl.innerHTML = `
+          <div>
+            <strong>${item.name}</strong>
+            <div style="font-size: 0.85em; color: #6b7280;">N$ ${item.price.toFixed(2)} x ${item.quantity}</div>
+          </div>
+          <div class="cart-item-controls">
+            <button onclick="changeQuantity('${item.id}', -1)">-</button>
+            <button onclick="changeQuantity('${item.id}', 1)">+</button>
+          </div>
+        `;
+        cartItemsEl.appendChild(itemEl);
+      });
+    }
+
+    // Change Quantity
+    window.changeQuantity = function(id, delta) {
+      const item = cart.find((i) => i.id === id);
+      if (!item) return;
+
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        cart = cart.filter((i) => i.id !== id);
+      }
+      updateCartUI();
+    };
+
+    // Checkout via WhatsApp
+    document.getElementById('whatsapp-checkout-btn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+
+      let message = "Hello Curiosity Corner! I would like to place an order for the following print-on-demand item(s):\n\n";
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        message += `${index + 1}. *${item.name}* (x${item.quantity}) - N$ ${itemTotal.toFixed(2)}\n`;
+      });
+
+      message += `\n*Total Amount Due: N$ ${total.toFixed(2)}*`;
+      message += `\n\nPlease let me know how to proceed with payment and order confirmation. Thank you!`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+
+      window.open(whatsappUrl, '_blank');
+    });
+  </script>
