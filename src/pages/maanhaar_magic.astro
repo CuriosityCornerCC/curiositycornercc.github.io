@@ -5,12 +5,14 @@ import Banner from '../components/Banner.astro';
 import FeatureCard from '../components/FeatureCard.astro';
 ---
 
-<BaseLayout title="Behind the Corner" description="A place to explore and learn about various topics that spark curiosity.">
+<BaseLayout title="Maanhaar Magic" description="A real beard can take a beating from the Karoo sun and farm dust.">
   
   <section>
     <h1>Maanhaar Magic Beard Oil</h1>
     <p>A real beard can take a beating from the Karoo sun and farm dust, but it shouldn't feel like a wire brush. We made Maanhaar Magic to soften up the coarsest facial hair without taking away your edge.</p>
     
+    <img class="image right" src="/images/products/maanhaar-magic-bottle.jpg" alt="Maanhaar Magic Beard Oil" style="max-width: 100%; height: auto; margin: 20px 0;" />
+
     <h3>What's inside?</h3>
     <p>We skip the filler and use eight hard-working natural oils: Argan, Avocado, Castor, Grapeseed, and MCT. Together, they soak into the hair and skin beneath to stop beard itch and dry flakes before they start. It leaves a light, clean sheen without feeling greasy.</p>
 
@@ -23,8 +25,20 @@ import FeatureCard from '../components/FeatureCard.astro';
 
     <p>Give your beard the care it deserves. Grab a bottle today.</p>
 
+    <p>Price: <strong>N$ 260.00</strong> for a 30 ml bottle</p>
+
+    <!-- WhatsApp Order Button -->
     <ul class="actions">
-      <li><a href="" class="button big">Order Now</a></li>
+      <li>
+        <a 
+          href="https://wa.me/264812368794?text=Hi%20Curiosity%20Corner!%20I%20would%20like%20to%20order%201x%20Beard%20Oil." 
+          class="button primary icon brands fa-whatsapp" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          Order Now
+        </a>
+      </li>
     </ul>
   </section>
 
