@@ -6,7 +6,7 @@ import FeatureCard from '../components/FeatureCard.astro';
 import { products } from '../data/products';
 
 // Configuration: Replace with your actual WhatsApp phone number (with country code, no + or spaces)
-const WHATSAPP_NUMBER = "264812345678"; // Example: "264812345678" for Namibia
+const WHATSAPP_NUMBER = "264812368794"; // Example: "264812345678" for Namibia
 
 // Dynamically extract unique categories from products
 const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
@@ -15,10 +15,42 @@ const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)
 <BaseLayout title="Behind the Corner" description="A place to explore and learn about various topics that spark curiosity.">
   
   <section>
-    <div class="pod-notice">
+    <h1>Cheeky Cherubs Baby Clothing Range</h1>
+
+    <!-- 2 Column Layout using existing .row and .col-6 classes -->
+    <div class="row gtr-uniform">
+      
+      <!-- Left Column -->
+      <div class="col-6 col-12-medium">
+        <p>It all started at a traditional, picture-perfect baby shower.</p>
+
+        <p>There were pastel balloons, silver rattles, and a stack of pastel onesies adorned with fluffy ducklings and glowing phrases like "Mommy’s Little Angel."</p>
+
+        <p>We looked at the newborn. The newborn looked back at us, mid-diaper blowout, screaming like a heavy metal frontman at 3:00 AM, having absolutely zero regard for personal boundaries or sleep schedules.</p>
+
+        <p>That’s when the realization hit: Babies aren't angels. They’re tiny, adorable dictators with zero impulse control.</p>
+        
+        <p>So why dress them like choir boys when we could tell the truth?</p>
+
+        <p>We created Cheeky Cherubs for the parents who love their kids fiercely—but also love a good laugh, a racy punchline, and keeping it 100% real. </p>
+
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-6 col-12-medium">
+        <p>We took soft cotton, added a healthy dash of sarcasm, and wrapped it all up like a bag of snacks because, frankly, parenting is wild enough without taking outfit choices too seriously.</p>      
+
+        <p>Our Mission? To make grandpa double-take, make mom laugh through the sleep deprivation, and ensure your tiny tot is the best-dressed rebel in the playroom.</p>
+
+        <p>Handmade with mischief. Worn with zero regrets.</p>
+
+        <div class="pod-notice">
         <h3><i class="fas fa-info-circle"></i> How Ordering Works</h3>
         <p>All our products are <strong>made on demand</strong> specifically for you once ordered. To place an order, add your items to the cart and click <strong>Checkout via WhatsApp</strong>. We will receive your order details and handle processing and payment with you directly!</p>
       </div>
+      </div>
+
+    </div>
       
     <!-- Category Filter Buttons -->
       <div class="filter-container">
@@ -34,14 +66,13 @@ const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)
           ))}
         </div>
       </div>
-
       <!-- Product Grid -->
       <div class="product-grid" id="product-grid">
         {products.map((product) => (
           <div class="product-card" data-category={product.category}>
             <div>
               <span class="product-badge">{product.category}</span>
-              <img src={product.image} alt={product.name} class="product-image" />
+              <img src={product.image} alt={product.name} class="product-image clickable-image" />
               <h3>{product.name}</h3>
               <p>{product.description}</p>
             </div>
@@ -59,7 +90,7 @@ const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)
           </div>
         ))}
       </div>
-    
+
       <!-- Floating Cart Toggle Button -->
   <button id="open-cart-btn" class="cart-toggle-btn">
     <i class="fab fa-whatsapp" style="font-size: 1.4em;"></i>
@@ -89,6 +120,12 @@ const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)
         <i class="fab fa-whatsapp"></i> Checkout via WhatsApp
       </button>
     </div>
+  </div>
+
+  <!-- Image Modal Markup -->
+  <div id="imageModal" class="image-modal" role="dialog" aria-modal="true">
+    <span class="image-modal-close" id="modalClose">&times;</span>
+    <img class="image-modal-content" id="modalImage" alt="Enlarged view">
   </div>
 
   </section>
@@ -228,5 +265,39 @@ const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)
       const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
       window.open(whatsappUrl, '_blank');
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      const closeBtn = document.getElementById('modalClose');
+
+      // Add click listener to all clickable images
+      document.querySelectorAll('.clickable-image').forEach(img => {
+        img.addEventListener('click', () => {
+          modal.classList.add('active');
+          modalImg.src = img.src;
+          modalImg.alt = img.alt;
+        });
+      });
+
+      // Close modal on close button click
+      closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+      });
+
+      // Close modal when clicking outside the enlarged image
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+        }
+      });
+
+      // Close modal on Escape key press
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          modal.classList.remove('active');
+        }
+      });
     });
   </script>

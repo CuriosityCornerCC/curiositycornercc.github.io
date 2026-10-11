@@ -1863,7 +1863,7 @@ header.main p, header.main p.meta, header.major p {
   border-radius: 4px;
 }
 .filter-container {
-  margin-bottom: 2em;
+  margin: 2em 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
