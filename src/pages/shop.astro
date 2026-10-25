@@ -3,16 +3,12 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Banner from '../components/Banner.astro';
 import FeatureCard from '../components/FeatureCard.astro';
-import { products } from '../data/products';
-
 // Fetch all markdown files from the 'products' folder
 const allProducts = await getCollection('products');
 
 // Configuration: Replace with your actual WhatsApp phone number (with country code, no + or spaces)
 const WHATSAPP_NUMBER = "264812368794"; // Example: "264812345678" for Namibia
 
-// Dynamically extract unique categories from products
-const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
 ---
 
 <BaseLayout title="Behind the Corner" description="A place to explore and learn about various topics that spark curiosity.">
@@ -20,21 +16,6 @@ const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)
   <section>
     <h1>Cheeky Cherubs Baby Clothing Range</h1>
 
-    <!-- Category Filter Buttons -->
-      <div class="filter-container">
-        <strong>Filter by Category:</strong>
-        <div class="filter-buttons">
-          {categories.map((cat) => (
-            <button 
-              class={`button small category-btn ${cat === 'All' ? 'primary' : ''}`}
-              data-category={cat}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
-      
       <!-- Product Grid -->
       <div class="product-grid">
         {allProducts.map((product) => (
@@ -47,11 +28,14 @@ const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)
               <p class="price">${product.data.price}</p>
             )}
             <p>{product.data.description}</p>
-            
-            {/* Optional: Render the markdown body content */}
-            <div class="product-details">
-              <product.render />
-            </div>
+            <button
+              class="add-to-cart-btn"
+              data-id={product.slug}
+              data-name={product.data.title}
+              data-price={product.data.price}
+            >
+              Add to Cart
+            </button>
           </article>
         ))}
       </div>
