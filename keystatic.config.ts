@@ -71,5 +71,42 @@ export default config({
         content: fields.markdoc({ label: 'Content' }),
       },
     }),
+
+    cheekyCherubs: collection({
+      label: 'Cheeky Cherubs Products',
+      slugField: 'title',
+      path: 'src/content/cheeky-cherubs/*/',
+      format: { contentField: 'content' }, // This ensures it saves as an .md file
+      schema: {
+        title: fields.slug({ 
+          name: { label: 'Product Title' } 
+        }),
+        shortDescription: fields.text({ 
+          label: 'Short Description', 
+          multiline: true 
+        }),
+        price: fields.text({ 
+          label: 'Price (e.g., $19.99)' 
+        }),
+        productCode: fields.text({ 
+          label: 'Product Code' 
+        }),
+        image: fields.image({
+          label: 'Product Image',
+          directory: 'public/images/cheeky-cherubs',
+          publicPath: '/images/cheeky-cherubs/'
+        }),
+        // The content field acts as the body of your .md file
+        content: fields.document({
+          label: 'Detailed Product Content',
+          formatting: true,
+          dividers: true,
+          links: true,
+          images: true,
+        }),
+      },
+    }),
+
+
   },
 });
