@@ -51,4 +51,17 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+const productsCollection = defineCollection({
+  type: 'content', 
+  schema: z.object({
+    title: z.string(),
+    price: z.number().optional(),
+    description: z.string().optional(),
+    image: z.string().optional(),
+  }),
+});
+
+export const collections = {
+  'products': productsCollection,
+  'blog': blog,
+};
