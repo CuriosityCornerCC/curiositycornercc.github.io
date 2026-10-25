@@ -49,3 +49,18 @@ collections:
             widget: "list"
             required: false
             field: { label: "Step", name: "step", widget: "text" }
+
+  - name: "products"
+    label: "Products"
+    label_singular: "Product"
+    folder: "src/content/products" # Adjust this to where your product .md files are stored
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Product Name", name: "title", widget: "string" }
+      - { label: "Price", name: "price", widget: "number", required: false }
+      - { label: "Description", name: "description", widget: "text", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Body", name: "body", widget: "markdown" }
